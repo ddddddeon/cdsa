@@ -9,6 +9,9 @@ int main(int argc, char* argv[]) {
     cdsa_array_insert_at(a, 3, 1);
     cdsa_array_insert_at(a, 5, 0);
     cdsa_array_update_at(a, 8, 1);
+    cdsa_array_display(a);
+    printf("%d\n", cdsa_array_get(a, 2));
+    printf("%d\n", cdsa_array_index_of(a, 8));
     cdsa_array_delete_at(a, 1);
     cdsa_array_delete_at(a, 2);
     cdsa_array_delete_at(a, 2);

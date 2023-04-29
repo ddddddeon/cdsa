@@ -100,6 +100,18 @@ int cdsa_array_delete_at(cdsa_array *c, int i) {
   c->size--;
 }
 
+int cdsa_array_get(cdsa_array *c, int i) { return c->data[i]; }
+
+int cdsa_array_index_of(cdsa_array *c, int n) {
+    for (int i = 0; i < c->size; i++) {
+        if (c->data[i] == n) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
 void cdsa_array_fill(cdsa_array *c, int n) {
     ABORT_IF_FREED(c);
     c->size = 0;
