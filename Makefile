@@ -10,7 +10,7 @@ $(NAME):
 	set -e; \
 	rm src/*~ src/\#* 2>/dev/null || true; \
 	if [ ! -d bin ]; then mkdir bin; fi; \
-	$(CC) -o $(OUTFILE) $(INFILES) $(CFLAGS)
+	$(CC) -static -o $(OUTFILE) $(INFILES) $(CFLAGS)
 
 clean:	findBin
 	@rm -rf bin;
