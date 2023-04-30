@@ -89,15 +89,15 @@ int array_update_at(Array *c, int n, int i) {
 
 int array_delete_at(Array *c, int i) {
     ABORT_IF_FREED(c);
-  if (i >= c->size) {
-    return -1;
-  }
+    if (i >= c->size) {
+      return -1;
+    }
 
-  for (int idx = i; i < c->size; i++) {
-    *(c->data + i) = c->data[i + 1];
-  }
+    for (int idx = i; i < c->size; i++) {
+        *(c->data + i) = c->data[i + 1];
+    }
 
-  c->size--;
+    c->size--;
 }
 
 int array_get(Array *c, int i) { return c->data[i]; }
