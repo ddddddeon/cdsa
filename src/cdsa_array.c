@@ -11,7 +11,7 @@ typedef struct {
     int data[];
 } cdsa_array;
 
-#define ABORT_IF_FREED(c)                                               \
+#define ABORT_IF_FREED(c)                                                           \
     do {                                                                            \
         if (c->freed) {                                                             \
             printf("[%s:%d] cdsa_array has been freed!\n", __FUNCTION__, __LINE__); \
