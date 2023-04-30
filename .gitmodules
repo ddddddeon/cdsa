@@ -1,0 +1,3 @@
+[submodule "src/third_party/hk"]
+	path = src/third_party/hk
+	url = https://github.com/ddddddeon/hk
