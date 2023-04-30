@@ -14,7 +14,7 @@ typedef struct {
 #define ABORT_IF_FREED(c)                                                           \
     do {                                                                            \
         if (c->freed) {                                                             \
-            printf("[%s:%d] array has been freed!\n", __FUNCTION__, __LINE__);      \
+            printf("[%s] array has been freed!\n", __FUNCTION__);                   \
             abort();                                                                \
         }                                                                           \
 } while (0)
