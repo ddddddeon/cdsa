@@ -19,6 +19,8 @@ LinkedList *linked_list_new() {
     p->size = 0;
     p->first = NULL;
     p->last = NULL;
+
+    return p;
 }
 
 LinkedListNode *linked_list_node_new(int n) {
