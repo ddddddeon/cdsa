@@ -1,7 +1,7 @@
-#include <stddef.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include <stdbool.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 typedef struct {
@@ -11,23 +11,23 @@ typedef struct {
     int data[];
 } Array;
 
-#define ABORT_IF_FREED(c)                                                           \
-    do {                                                                            \
-        if (c->freed) {                                                             \
-            printf("[%s] array has been freed!\n", __FUNCTION__);                   \
-            abort();                                                                \
-        }                                                                           \
-} while (0)
+#define ABORT_IF_FREED(c)                                         \
+    do {                                                          \
+        if (c->freed) {                                           \
+            printf("[%s] array has been freed!\n", __FUNCTION__); \
+            abort();                                              \
+        }                                                         \
+    } while (0)
 
 Array *array_new(size_t len) {
-    Array*p = malloc(sizeof(Array) + len * sizeof(int));
+    Array *p = malloc(sizeof(Array) + len * sizeof(int));
     p->cap = len;
     p->size = 0;
     p->freed = false;
     return p;
 }
 
-void array_free(Array*c) {
+void array_free(Array *c) {
     c->freed = true;
     free(c);
 }
@@ -90,7 +90,7 @@ int array_update_at(Array *c, int n, int i) {
 int array_delete_at(Array *c, int i) {
     ABORT_IF_FREED(c);
     if (i >= c->size) {
-      return -1;
+        return -1;
     }
 
     for (int idx = i; i < c->size; i++) {
