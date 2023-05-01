@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "cdsa.h"
-#include "third_party/hk/src/log.h"
+#include "linked_list.h"
 
 int main(int argc, char* argv[]) {
     Array* a = array_new(10);
@@ -24,4 +24,19 @@ int main(int argc, char* argv[]) {
     array_update_at(a, 100, 5);
     array_display(a);
     array_free(a);
+
+    LinkedList* l = linked_list_new();
+    linked_list_insert_end(l, 0);
+    linked_list_insert_end(l, 1);
+    linked_list_print(l);
+    linked_list_insert_end(l, 2);
+    linked_list_print(l);
+    linked_list_insert_beginning(l, 3);
+    linked_list_print(l);
+    linked_list_delete(l, 3);
+    linked_list_print(l);
+    linked_list_delete(l, 1);
+    linked_list_print(l);
+    linked_list_reverse(l);
+    linked_list_print(l);
 }

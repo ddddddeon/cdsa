@@ -14,7 +14,7 @@ int array_index_of(Array *c, int n);
 int array_insert(Array *c, int n);
 int array_insert_at(Array *c, int n, int i);
 int array_update_at(Array *c, int n, int i);
-int array_delete_at(Array *c, int i);
+void array_delete_at(Array *c, int i);
 int array_fill(Array *c, int n);
 
 #endif /* ARRAY_H */
