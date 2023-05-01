@@ -11,7 +11,7 @@ typedef struct {
     int data[];
 } Array;
 
-#define ABORT_IF_FREED(c)                                         \
+#define ABORT_IF_ARRAY_FREED(c)                                   \
     do {                                                          \
         if (c->freed) {                                           \
             printf("[%s] array has been freed!\n", __FUNCTION__); \
@@ -28,6 +28,7 @@ Array *array_new(size_t len) {
 }
 
 void array_free(Array *c) {
+    ABORT_IF_ARRAY_FREED(c);
     c->freed = true;
     free(c);
 }
@@ -36,7 +37,7 @@ size_t array_size(Array *c) { return c->size; }
 size_t array_cap(Array *c) { return c->cap; }
 
 void array_display(Array *c) {
-    ABORT_IF_FREED(c);
+    ABORT_IF_ARRAY_FREED(c);
     printf("[ ");
     for (int i = 0; i < c->size; i++) {
         printf("%d ", c->data[i]);
@@ -45,12 +46,12 @@ void array_display(Array *c) {
 }
 
 int array_avail(Array *c) {
-    ABORT_IF_FREED(c);
+    ABORT_IF_ARRAY_FREED(c);
     return c->cap - c->size;
 }
 
 int array_insert(Array *c, int n) {
-    ABORT_IF_FREED(c);
+    ABORT_IF_ARRAY_FREED(c);
     if (array_avail(c) <= 0) {
         return -1;
     }
@@ -62,7 +63,7 @@ int array_insert(Array *c, int n) {
 }
 
 int array_insert_at(Array *c, int n, int i) {
-    ABORT_IF_FREED(c);
+    ABORT_IF_ARRAY_FREED(c);
     if (c->cap - c->size < 1 || i >= c->cap) {
         return -1;
     }
@@ -78,7 +79,7 @@ int array_insert_at(Array *c, int n, int i) {
 }
 
 int array_update_at(Array *c, int n, int i) {
-    ABORT_IF_FREED(c);
+    ABORT_IF_ARRAY_FREED(c);
     if (i >= c->cap) {
         return -1;
     }
@@ -88,7 +89,7 @@ int array_update_at(Array *c, int n, int i) {
 }
 
 void array_delete_at(Array *c, int i) {
-    ABORT_IF_FREED(c);
+    ABORT_IF_ARRAY_FREED(c);
     if (i >= c->size) {
         return;
     }
@@ -113,7 +114,7 @@ int array_index_of(Array *c, int n) {
 }
 
 void array_fill(Array *c, int n) {
-    ABORT_IF_FREED(c);
+    ABORT_IF_ARRAY_FREED(c);
     c->size = 0;
     for (int i = 0; i < c->cap; i++) {
         *(c->data + i) = n;

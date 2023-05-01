@@ -39,4 +39,5 @@ int main(int argc, char* argv[]) {
     linked_list_print(l);
     linked_list_reverse(l);
     linked_list_print(l);
+    linked_list_free(l);
 }
