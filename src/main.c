@@ -23,7 +23,8 @@ int main(int argc, char* argv[]) {
     array_display(a);
     array_update_at(a, 100, 5);
     array_display(a);
-    array_free(a);
+    array_free(&a);
+    // array_display(a);
 
     LinkedList* l = linked_list_new();
     linked_list_insert_end(l, 0);
@@ -39,5 +40,6 @@ int main(int argc, char* argv[]) {
     linked_list_print(l);
     linked_list_reverse(l);
     linked_list_print(l);
-    linked_list_free(l);
+    linked_list_free(&l);
+    // linked_list_print(l);
 }

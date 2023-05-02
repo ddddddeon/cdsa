@@ -24,7 +24,7 @@ install:
 	echo "[OK] installed to /usr/bin/$(NAME)";
 
 check:
-	@valgrind --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=20 --track-fds=yes ./bin/$(NAME)
+	@valgrind --tool=memcheck --leak-check=full --show-reachable=yes --num-callers=20 --track-fds=yes ./bin/$(NAME)
 
 trace:
 	@strace ./bin/$(NAME)

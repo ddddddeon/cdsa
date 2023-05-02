@@ -4,40 +4,32 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "common.h"
+
 typedef struct {
     size_t size;
     size_t cap;
-    bool freed;
     int data[];
 } Array;
-
-#define ABORT_IF_ARRAY_FREED(c)                                   \
-    do {                                                          \
-        if (c->freed) {                                           \
-            printf("[%s] array has been freed!\n", __FUNCTION__); \
-            abort();                                              \
-        }                                                         \
-    } while (0)
 
 Array *array_new(size_t len) {
     Array *p = malloc(sizeof(Array) + len * sizeof(int));
     p->cap = len;
     p->size = 0;
-    p->freed = false;
     return p;
 }
 
-void array_free(Array *c) {
-    ABORT_IF_ARRAY_FREED(c);
-    c->freed = true;
-    free(c);
+void array_free(Array **c) {
+    ABORT_IF_NULL(c);
+    free(*c);
+    *c = NULL;
 }
 
 size_t array_size(Array *c) { return c->size; }
 size_t array_cap(Array *c) { return c->cap; }
 
 void array_display(Array *c) {
-    ABORT_IF_ARRAY_FREED(c);
+    ABORT_IF_NULL(c);
     printf("[ ");
     for (int i = 0; i < c->size; i++) {
         printf("%d ", c->data[i]);
@@ -46,12 +38,12 @@ void array_display(Array *c) {
 }
 
 int array_avail(Array *c) {
-    ABORT_IF_ARRAY_FREED(c);
+    ABORT_IF_NULL(c);
     return c->cap - c->size;
 }
 
 int array_insert(Array *c, int n) {
-    ABORT_IF_ARRAY_FREED(c);
+    ABORT_IF_NULL(c);
     if (array_avail(c) <= 0) {
         return -1;
     }
@@ -63,7 +55,7 @@ int array_insert(Array *c, int n) {
 }
 
 int array_insert_at(Array *c, int n, int i) {
-    ABORT_IF_ARRAY_FREED(c);
+    ABORT_IF_NULL(c);
     if (c->cap - c->size < 1 || i >= c->cap) {
         return -1;
     }
@@ -79,7 +71,7 @@ int array_insert_at(Array *c, int n, int i) {
 }
 
 int array_update_at(Array *c, int n, int i) {
-    ABORT_IF_ARRAY_FREED(c);
+    ABORT_IF_NULL(c);
     if (i >= c->cap) {
         return -1;
     }
@@ -89,7 +81,7 @@ int array_update_at(Array *c, int n, int i) {
 }
 
 void array_delete_at(Array *c, int i) {
-    ABORT_IF_ARRAY_FREED(c);
+    ABORT_IF_NULL(c);
     if (i >= c->size) {
         return;
     }
@@ -114,7 +106,7 @@ int array_index_of(Array *c, int n) {
 }
 
 void array_fill(Array *c, int n) {
-    ABORT_IF_ARRAY_FREED(c);
+    ABORT_IF_NULL(c);
     c->size = 0;
     for (int i = 0; i < c->cap; i++) {
         *(c->data + i) = n;
