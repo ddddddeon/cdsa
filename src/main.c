@@ -45,19 +45,23 @@ int main(int argc, char* argv[]) {
     linked_list_free(&l);
     // linked_list_print(l);
 
-    OrderedArray* o = ordered_array_new(10);
-    ordered_array_insert(o, 12);
-    ordered_array_print(o);
-    ordered_array_insert(o, 4);
-    ordered_array_print(o);
-    ordered_array_insert(o, 24);
-    ordered_array_print(o);
-    ordered_array_insert(o, 0);
-    ordered_array_print(o);
-    ordered_array_insert(o, 24);
-    ordered_array_print(o);
-    ordered_array_insert(o, 4);
-    ordered_array_print(o);
-    ordered_array_insert(o, 0);
-    ordered_array_print(o);
+    OrderedSet* o = ordered_set_new(10);
+    ordered_set_insert(o, 12);
+    ordered_set_print(o);
+    ordered_set_insert(o, 4);
+    ordered_set_print(o);
+    ordered_set_insert(o, 24);
+    ordered_set_print(o);
+    ordered_set_insert(o, 0);
+    ordered_set_print(o);
+    ordered_set_insert(o, 24);
+    ordered_set_print(o);
+    ordered_set_insert(o, 4);
+    ordered_set_print(o);
+    ordered_set_insert(o, 0);
+    ordered_set_print(o);
+    int i = ordered_set_index_of(o, 24);
+    printf("%d\n", i);
+    int j = ordered_set_index_of(o, 4);
+    printf("%d\n", j);
 }

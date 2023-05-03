@@ -11,25 +11,25 @@ typedef struct {
     size_t size;
     size_t cap;
     int data[];
-} OrderedArray;
+} OrderedSet;
 
-OrderedArray *ordered_array_new(size_t len) {
-    OrderedArray *p = malloc(sizeof(OrderedArray) + len * sizeof(int));
+OrderedSet *ordered_set_new(size_t len) {
+    OrderedSet *p = malloc(sizeof(OrderedSet) + len * sizeof(int));
     p->cap = len;
     p->size = 0;
     return p;
 }
 
-void ordered_array_free(OrderedArray **c) {
+void ordered_set_free(OrderedSet **c) {
     ABORT_IF_NULL(c);
     free(*c);
     *c = NULL;
 }
 
-size_t ordered_array_size(OrderedArray *c) { return c->size; }
-size_t ordered_array_cap(OrderedArray *c) { return c->cap; }
+size_t ordered_set_size(OrderedSet *c) { return c->size; }
+size_t ordered_set_cap(OrderedSet *c) { return c->cap; }
 
-void ordered_array_print(OrderedArray *c) {
+void ordered_set_print(OrderedSet *c) {
     ABORT_IF_NULL(c);
     printf("[ ");
     for (int i = 0; i < c->size; i++) {
@@ -38,30 +38,35 @@ void ordered_array_print(OrderedArray *c) {
     printf("]\n");
 }
 
-int ordered_array_avail(OrderedArray *c) {
+int ordered_set_avail(OrderedSet *c) {
     ABORT_IF_NULL(c);
     return c->cap - c->size;
 }
 
-int ordered_array_insert(OrderedArray *c, int n) {
+int ordered_set_insert(OrderedSet *c, int n) {
     ABORT_IF_NULL(c);
-    if (ordered_array_avail(c) <= 0) {
+    if (ordered_set_avail(c) <= 0) {
         return -1;
     }
 
     if (c->size == 0) {
+        printf("size is 0");
         *(c->data + 0) = n;
         c->size++;
         return 0;
     }
 
-    if (n >= c->data[c->size - 1]) {
+    if (n > c->data[c->size - 1]) {
         *(c->data + c->size) = n;
         c->size++;
         return c->size - 1;
     }
 
     for (int i = 0; i < c->size; i++) {
+        if (c->data[i] == n) {
+            return i;
+        }
+
         if (c->data[i] > n) {
             for (int idx = c->size - 1; idx >= i; idx--) {
                 *(c->data + idx + 1) = c->data[idx];
@@ -75,7 +80,7 @@ int ordered_array_insert(OrderedArray *c, int n) {
     return -1;
 }
 
-void ordered_array_delete_at(OrderedArray *c, int i) {
+void ordered_set_delete_at(OrderedSet *c, int i) {
     ABORT_IF_NULL(c);
     if (i >= c->size) {
         return;
@@ -88,21 +93,31 @@ void ordered_array_delete_at(OrderedArray *c, int i) {
     c->size--;
 }
 
-int ordered_array_get(OrderedArray *c, int i) { return c->data[i]; }
+int ordered_set_get(OrderedSet *c, int i) { return c->data[i]; }
 
-/*
- * TODO use binary search
- */
-int ordered_array_index_of(OrderedArray *c, int n) {
+// binary search
+int ordered_set_index_of(OrderedSet *c, int n) {
     if (n > c->data[c->size - 1]) {
         return -1;
     }
 
-    for (int i = 0; i < c->size; i++) {
-        if (c->data[i] == n) {
-            return i;
+    int lower = 0;
+    int upper = c->size - 1;
+    int mid;
+
+    while (lower <= upper) {
+        mid = (upper + lower) / 2;
+        int mid_value = c->data[mid];
+
+        if (n == mid_value) {
+            return mid;
+        }
+
+        if (n < mid_value) {
+            upper = mid - 1;
+        } else if (n > mid_value) {
+            lower = mid + 1;
         }
     }
-
     return -1;
 }
