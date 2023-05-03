@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 
 #include "common.h"
@@ -28,7 +29,7 @@ void array_free(Array **c) {
 size_t array_size(Array *c) { return c->size; }
 size_t array_cap(Array *c) { return c->cap; }
 
-void array_display(Array *c) {
+void array_print(Array *c) {
     ABORT_IF_NULL(c);
     printf("[ ");
     for (int i = 0; i < c->size; i++) {
@@ -56,13 +57,12 @@ int array_insert(Array *c, int n) {
 
 int array_insert_at(Array *c, int n, int i) {
     ABORT_IF_NULL(c);
-    if (c->cap - c->size < 1 || i >= c->cap) {
+    if (c->cap - c->size < 1 || i >= c->cap || i < 0) {
         return -1;
     }
 
     c->size++;
     for (int idx = c->size - 1; idx >= i; idx--) {
-        printf("* %d\n", c->data[idx]);
         *(c->data + idx + 1) = c->data[idx];
     }
 
@@ -111,5 +111,14 @@ void array_fill(Array *c, int n) {
     for (int i = 0; i < c->cap; i++) {
         *(c->data + i) = n;
         c->size++;
+    }
+}
+
+void array_reverse(Array *c) {
+    ABORT_IF_NULL(c);
+    for (int i = 0; i < c->size / 2; i++) {
+        int tmp = c->data[i];
+        *(c->data + i) = c->data[c->size - i - 1];
+        *(c->data + c->size - i - 1) = tmp;
     }
 }

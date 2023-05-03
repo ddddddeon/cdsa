@@ -79,17 +79,18 @@ void linked_list_delete(LinkedList *ll, int n) {
         if (new != NULL) {
             *ll->first = *new;
         }
-
         return;
     }
 
     LinkedListNode *curr = ll->first;
     while (curr->next != NULL) {
         if (curr->next->value == n) {
-            free(curr->next);
+            LinkedListNode *tmp = curr->next;
             curr->next = curr->next->next;
+            free(tmp);
             return;
         }
+        curr = curr->next;
     }
 }
 

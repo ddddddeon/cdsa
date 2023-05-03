@@ -10,21 +10,23 @@ int main(int argc, char* argv[]) {
     array_insert_at(a, 3, 1);
     array_insert_at(a, 5, 0);
     array_update_at(a, 8, 1);
-    array_display(a);
+    array_print(a);
+    array_reverse(a);
+    array_print(a);
     printf("%d\n", array_get(a, 2));
     printf("%d\n", array_index_of(a, 8));
     array_delete_at(a, 1);
     array_delete_at(a, 2);
     array_delete_at(a, 2);
     array_delete_at(a, 2);
-    array_display(a);
+    array_print(a);
     printf("%zu\n", array_size(a));
     array_fill(a, 0);
-    array_display(a);
+    array_print(a);
     array_update_at(a, 100, 5);
-    array_display(a);
+    array_print(a);
     array_free(&a);
-    // array_display(a);
+    // array_print(a);
 
     LinkedList* l = linked_list_new();
     linked_list_insert_end(l, 0);
@@ -42,4 +44,20 @@ int main(int argc, char* argv[]) {
     linked_list_print(l);
     linked_list_free(&l);
     // linked_list_print(l);
+
+    OrderedArray* o = ordered_array_new(10);
+    ordered_array_insert(o, 12);
+    ordered_array_print(o);
+    ordered_array_insert(o, 4);
+    ordered_array_print(o);
+    ordered_array_insert(o, 24);
+    ordered_array_print(o);
+    ordered_array_insert(o, 0);
+    ordered_array_print(o);
+    ordered_array_insert(o, 24);
+    ordered_array_print(o);
+    ordered_array_insert(o, 4);
+    ordered_array_print(o);
+    ordered_array_insert(o, 0);
+    ordered_array_print(o);
 }
