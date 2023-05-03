@@ -50,7 +50,6 @@ int ordered_set_insert(OrderedSet *c, int n) {
     }
 
     if (c->size == 0) {
-        printf("size is 0");
         *(c->data + 0) = n;
         c->size++;
         return 0;
