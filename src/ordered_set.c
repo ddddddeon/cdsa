@@ -61,22 +61,34 @@ int ordered_set_insert(OrderedSet *c, int n) {
         return c->size - 1;
     }
 
-    for (int i = 0; i < c->size; i++) {
-        if (c->data[i] == n) {
-            return i;
+    int lower = 0;
+    int upper = c->size - 1;
+    int mid;
+
+    while (lower <= upper) {
+        mid = (upper + lower) / 2;
+        int mid_value = c->data[mid];
+
+        if (n == mid_value) {
+            return mid;
         }
 
-        if (c->data[i] > n) {
-            for (int idx = c->size - 1; idx >= i; idx--) {
-                *(c->data + idx + 1) = c->data[idx];
-            }
-            *(c->data + i) = n;
-            c->size++;
-            return i;
+        if (n < mid_value) {
+            upper = mid - 1;
+        } else if (n > mid_value) {
+            lower = mid + 1;
         }
     }
 
-    return -1;
+    int i = lower % c->size;
+
+    for (int idx = c->size - 1; idx >= i; idx--) {
+        *(c->data + idx + 1) = c->data[idx];
+    }
+
+    *(c->data + i) = n;
+    c->size++;
+    return i;
 }
 
 void ordered_set_delete_at(OrderedSet *c, int i) {
