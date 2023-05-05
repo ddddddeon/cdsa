@@ -4,6 +4,7 @@
 #include "array.h"
 #include "linked_list.h"
 #include "ordered_set.h"
+#include "queue.h"
 #include "stack.h"
 
 #endif /* !CDSA_H */

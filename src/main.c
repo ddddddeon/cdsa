@@ -95,4 +95,16 @@ int main(int argc, char* argv[]) {
     printf("%d\n", stack_peek(s));
     stack_print(s);
     stack_free(&s);
+
+    Queue* q = queue_new();
+    queue_enqueue(q, 1);
+    queue_enqueue(q, 2);
+    queue_enqueue(q, 3);
+    queue_enqueue(q, 4);
+    queue_print(q);
+
+    int d = queue_dequeue(q);
+    printf("%d\n", d);
+    queue_print(q);
+    queue_free(&q);
 }

@@ -29,7 +29,6 @@ void stack_push(Stack *s, int n) {
     if (s->head == NULL) {
         node->next = NULL;
         s->head = node;
-        s->length++;
     } else {
         StackNode *head = s->head;
         node->next = head;
@@ -68,17 +67,18 @@ void stack_print(Stack *s) {
     printf("]\n");
 }
 
+int stack_length(Stack *s) {
+    ABORT_IF_NULL(s);
+    return s->length;
+}
+
 void stack_free(Stack **s) {
     ABORT_IF_NULL(*s);
-    StackNode *curr = (*s)->head;
-    while (curr != NULL) {
-        StackNode *next = curr->next;
-        free(curr);
-        curr = next;
+    while ((*s)->length != 0) {
+        stack_pop(*s);
     }
 
     (*s)->head = NULL;
-    (*s)->length = 0;
     free(*s);
     *s = NULL;
 }
