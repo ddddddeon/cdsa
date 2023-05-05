@@ -4,6 +4,7 @@
 #include "linked_list.h"
 
 int main(int argc, char* argv[]) {
+    printf("array:\n");
     Array* a = array_new(10);
     array_insert(a, 1);
     array_insert(a, 2);
@@ -28,6 +29,7 @@ int main(int argc, char* argv[]) {
     array_free(&a);
     // array_print(a);
 
+    printf("linked list:\n");
     LinkedList* l = linked_list_new();
     linked_list_insert_end(l, 0);
     linked_list_insert_end(l, 1);
@@ -35,6 +37,10 @@ int main(int argc, char* argv[]) {
     linked_list_insert_end(l, 2);
     linked_list_print(l);
     linked_list_insert_beginning(l, 3);
+    linked_list_insert_at(l, 4, 1);
+    linked_list_insert_at(l, 10, 4);
+    linked_list_print(l);
+    linked_list_update_at(l, 11, 4);
     linked_list_print(l);
     linked_list_delete(l, 3);
     linked_list_print(l);
@@ -45,6 +51,7 @@ int main(int argc, char* argv[]) {
     linked_list_free(&l);
     // linked_list_print(l);
 
+    printf("ordered set:\n");
     OrderedSet* o = ordered_set_new(10);
     ordered_set_insert(o, 12);
     ordered_set_print(o);
@@ -84,6 +91,7 @@ int main(int argc, char* argv[]) {
     printf("%d\n", j);
     ordered_set_free(&o);
 
+    printf("stack:\n");
     Stack* s = stack_new();
     stack_print(s);
     stack_push(s, 1);
@@ -96,13 +104,13 @@ int main(int argc, char* argv[]) {
     stack_print(s);
     stack_free(&s);
 
+    printf("queue:\n");
     Queue* q = queue_new();
     queue_enqueue(q, 1);
     queue_enqueue(q, 2);
     queue_enqueue(q, 3);
     queue_enqueue(q, 4);
     queue_print(q);
-
     int d = queue_dequeue(q);
     printf("%d\n", d);
     queue_print(q);

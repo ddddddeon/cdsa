@@ -7,6 +7,7 @@
 struct LinkedListNode {
     int value;
     struct LinkedListNode *next;
+    struct LinkedListNode *prev;
 };
 
 typedef struct LinkedListNode LinkedListNode;
@@ -22,7 +23,6 @@ LinkedList *linked_list_new() {
     p->size = 0;
     p->first = NULL;
     p->last = NULL;
-
     return p;
 }
 
@@ -30,6 +30,7 @@ LinkedListNode *linked_list_node_new(int n) {
     LinkedListNode *p = malloc(sizeof(LinkedListNode));
     p->value = n;
     p->next = NULL;
+    p->prev = NULL;
     return p;
 }
 
@@ -52,8 +53,11 @@ void linked_list_print(LinkedList *ll) {
 void linked_list_insert_beginning(LinkedList *ll, int n) {
     ABORT_IF_NULL(ll);
     LinkedListNode *new = linked_list_node_new(n);
+    new->prev = NULL;
+    ll->first->prev = new;
     new->next = ll->first;
     ll->first = new;
+    ll->size++;
 }
 
 void linked_list_insert_end(LinkedList *ll, int n) {
@@ -67,18 +71,73 @@ void linked_list_insert_end(LinkedList *ll, int n) {
         return;
     }
 
+    new->prev = ll->last;
     ll->last->next = new;
     ll->last = ll->last->next;
     ll->size++;
+}
+
+void linked_list_insert_at(LinkedList *ll, int n, int idx) {
+    ABORT_IF_NULL(ll);
+
+    if (idx == 0) {
+        linked_list_insert_beginning(ll, n);
+        return;
+    }
+
+    if (idx == ll->size) {
+        linked_list_insert_end(ll, n);
+        return;
+    }
+
+    if (idx < 0 || idx > ll->size) {
+        return;
+    }
+
+    LinkedListNode *curr = ll->first;
+    for (int i = 0; i < idx; i++) {
+        curr = curr->next;
+    }
+
+    LinkedListNode *prev = curr->prev;
+    LinkedListNode *new = linked_list_node_new(n);
+    new->prev = prev;
+    new->next = curr;
+    prev->next = new;
+    curr->prev = new;
+    ll->size++;
+}
+
+void linked_list_update_at(LinkedList *ll, int n, int idx) {
+    ABORT_IF_NULL(ll);
+    if (idx < 0 || idx >= ll->size) {
+        return;
+    }
+
+    LinkedListNode *curr = ll->first;
+    for (int i = 0; i < idx; i++) {
+        curr = curr->next;
+    }
+
+    LinkedListNode *next = curr->next;
+    LinkedListNode *prev = curr->prev;
+    LinkedListNode *new = linked_list_node_new(n);
+    new->prev = prev;
+    new->next = next;
+    prev->next = new;
+    next->prev = new;
+    free(curr);
 }
 
 void linked_list_delete(LinkedList *ll, int n) {
     ABORT_IF_NULL(ll);
     if (ll->first->value == n) {
         LinkedListNode *new = ll->first->next;
-        if (new != NULL) {
-            *ll->first = *new;
-        }
+        LinkedListNode *old_first = ll->first;
+        free(old_first);
+        ll->first = new;
+        ll->first->prev = NULL;
+        ll->size--;
         return;
     }
 
@@ -87,7 +146,9 @@ void linked_list_delete(LinkedList *ll, int n) {
         if (curr->next->value == n) {
             LinkedListNode *tmp = curr->next;
             curr->next = curr->next->next;
+            curr->next->prev = curr;
             free(tmp);
+            ll->size--;
             return;
         }
         curr = curr->next;
