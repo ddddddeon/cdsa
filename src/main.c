@@ -1,7 +1,6 @@
 #include <stdio.h>
 
 #include "cdsa.h"
-#include "linked_list.h"
 
 int main(int argc, char* argv[]) {
     printf("array:\n");
@@ -98,10 +97,32 @@ int main(int argc, char* argv[]) {
     stack_push(s, 2);
     stack_push(s, 3);
     stack_print(s);
-    printf("%d\n", stack_pop(s));
+
+    StackItem r = stack_pop(s);
+    if (r.exists) {
+        printf("%d\n", r.value);
+    } else {
+        printf("Stack is empty!\n");
+    }
     stack_print(s);
-    printf("%d\n", stack_peek(s));
+
+    StackItem r2 = stack_peek(s);
+    if (r.exists) {
+        printf("%d\n", r2.value);
+    } else {
+        printf("Stack is empty!\n");
+    }
     stack_print(s);
+
+    stack_pop(s);
+    stack_pop(s);
+    StackItem r3 = stack_pop(s);
+    if (r3.exists) {
+        printf("%d\n", r3.value);
+    } else {
+        printf("Stack is empty!\n");
+    }
+
     stack_free(&s);
 
     printf("queue:\n");
@@ -111,8 +132,16 @@ int main(int argc, char* argv[]) {
     queue_enqueue(q, 3);
     queue_enqueue(q, 4);
     queue_print(q);
-    int d = queue_dequeue(q);
-    printf("%d\n", d);
+
+    for (int i = 0; i < 6; i++) {
+        QueueItem d = queue_dequeue(q);
+        if (d.exists) {
+            printf("%d\n", d.value);
+        } else {
+            printf("Queue is empty!\n");
+        }
+    }
+
     queue_print(q);
     queue_free(&q);
 }

@@ -1,3 +1,5 @@
+#include "queue.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -11,11 +13,11 @@ struct QueueNode {
 
 typedef struct QueueNode QueueNode;
 
-typedef struct {
+struct Queue {
     QueueNode *front;
     QueueNode *back;
     int length;
-} Queue;
+};
 
 Queue *queue_new() {
     Queue *p = malloc(sizeof(Queue));
@@ -43,10 +45,13 @@ void queue_enqueue(Queue *q, int n) {
     q->length++;
 }
 
-int queue_dequeue(Queue *q) {
+QueueItem queue_dequeue(Queue *q) {
     ABORT_IF_NULL(q);
+
+    QueueItem item = {.exists = false, .value = 0};
+
     if (q->length == 0) {
-        return -1;
+        return item;
     }
 
     QueueNode *old_front = q->front;
@@ -60,7 +65,18 @@ int queue_dequeue(Queue *q) {
     int value = old_front->value;
     free(old_front);
 
-    return value;
+    if (q->length == 1) {
+        q->back = NULL;
+    }
+
+    item.exists = true;
+    item.value = value;
+    return item;
+}
+
+int queue_length(Queue *q) {
+    ABORT_IF_NULL(q);
+    return q->length;
 }
 
 void queue_print(Queue *q) {
@@ -74,10 +90,6 @@ void queue_print(Queue *q) {
     printf("]\n");
 }
 
-int queue_length(Queue *q) {
-    ABORT_IF_NULL(q);
-    return q->length;
-}
 void queue_free(Queue **q) {
     ABORT_IF_NULL(q);
     while ((*q)->length != 0) {

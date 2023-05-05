@@ -1,3 +1,6 @@
+#include "stack.h"
+
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -10,10 +13,10 @@ struct StackNode {
 
 typedef struct StackNode StackNode;
 
-typedef struct {
+struct Stack {
     StackNode *head;
     int length;
-} Stack;
+};
 
 Stack *stack_new() {
     Stack *p = malloc(sizeof(Stack));
@@ -37,22 +40,38 @@ void stack_push(Stack *s, int n) {
     s->length++;
 }
 
-int stack_pop(Stack *s) {
+StackItem stack_pop(Stack *s) {
     ABORT_IF_NULL(s);
+
+    StackItem item = {.exists = false, .value = 0};
+
     StackNode *head = s->head;
     if (head == NULL) {
-        return -1;
+        return item;
     }
 
     int popped = head->value;
     s->head = head->next;
     free(head);
     s->length--;
-    return popped;
+
+    item.exists = true;
+    item.value = popped;
+    return item;
 }
-int stack_peek(Stack *s) {
+
+StackItem stack_peek(Stack *s) {
     ABORT_IF_NULL(s);
-    return s->head->value;
+
+    StackItem item = {.exists = false, .value = 0};
+
+    if (s->head == NULL) {
+        return item;
+    }
+
+    item.exists = true;
+    item.value = s->head->value;
+    return item;
 }
 
 void stack_print(Stack *s) {
