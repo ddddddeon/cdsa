@@ -79,6 +79,9 @@ void linked_list_insert_end(LinkedList *ll, int n) {
 
 void linked_list_insert_at(LinkedList *ll, int n, int idx) {
     ABORT_IF_NULL(ll);
+    if (idx < 0 || idx > ll->size) {
+        return;
+    }
 
     if (idx == 0) {
         linked_list_insert_beginning(ll, n);
@@ -87,10 +90,6 @@ void linked_list_insert_at(LinkedList *ll, int n, int idx) {
 
     if (idx == ll->size) {
         linked_list_insert_end(ll, n);
-        return;
-    }
-
-    if (idx < 0 || idx > ll->size) {
         return;
     }
 
