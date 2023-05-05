@@ -56,6 +56,10 @@ QueueItem queue_dequeue(Queue *q) {
 
     QueueNode *old_front = q->front;
 
+    if (q->length == 1) {
+        q->back = NULL;
+    }
+
     if (q->length > 1) {
         q->front = old_front->prev;
     }
@@ -64,10 +68,6 @@ QueueItem queue_dequeue(Queue *q) {
     q->length--;
     int value = old_front->value;
     free(old_front);
-
-    if (q->length == 1) {
-        q->back = NULL;
-    }
 
     item.exists = true;
     item.value = value;
