@@ -61,6 +61,7 @@ int ordered_set_insert(OrderedSet *c, int n) {
         return c->size - 1;
     }
 
+    // binary search O(log n)
     int lower = 0;
     int upper = c->size - 1;
     int mid;
@@ -82,6 +83,7 @@ int ordered_set_insert(OrderedSet *c, int n) {
 
     int i = lower % c->size;
 
+    // linear shift O(n - i), worst case i = 0: O(n)
     for (int idx = c->size - 1; idx >= i; idx--) {
         *(c->data + idx + 1) = c->data[idx];
     }
@@ -106,7 +108,7 @@ void ordered_set_delete_at(OrderedSet *c, int i) {
 
 int ordered_set_get(OrderedSet *c, int i) { return c->data[i]; }
 
-// binary search
+// binary search O(log n)
 int ordered_set_index_of(OrderedSet *c, int n) {
     if (n > c->data[c->size - 1]) {
         return -1;
