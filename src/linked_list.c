@@ -112,6 +112,7 @@ void linked_list_reverse(LinkedList *ll) {
 }
 
 void linked_list_free(LinkedList **ll) {
+    ABORT_IF_NULL(*ll);
     LinkedListNode *curr = (*ll)->first;
     while (curr != NULL) {
         LinkedListNode *next = curr->next;

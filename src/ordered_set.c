@@ -26,8 +26,14 @@ void ordered_set_free(OrderedSet **c) {
     *c = NULL;
 }
 
-size_t ordered_set_size(OrderedSet *c) { return c->size; }
-size_t ordered_set_cap(OrderedSet *c) { return c->cap; }
+size_t ordered_set_size(OrderedSet *c) {
+    ABORT_IF_NULL(c);
+    return c->size;
+}
+size_t ordered_set_cap(OrderedSet *c) {
+    ABORT_IF_NULL(c);
+    return c->cap;
+}
 
 void ordered_set_print(OrderedSet *c) {
     ABORT_IF_NULL(c);
@@ -110,6 +116,7 @@ int ordered_set_get(OrderedSet *c, int i) { return c->data[i]; }
 
 // binary search O(log n)
 int ordered_set_index_of(OrderedSet *c, int n) {
+    ABORT_IF_NULL(c);
     if (n > c->data[c->size - 1]) {
         return -1;
     }

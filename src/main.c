@@ -78,9 +78,21 @@ int main(int argc, char* argv[]) {
     ordered_set_print(o);
     ordered_set_insert(o, 24);
     ordered_set_print(o);
-
     int i = ordered_set_index_of(o, 24);
     printf("%d\n", i);
     int j = ordered_set_index_of(o, 4);
     printf("%d\n", j);
+    ordered_set_free(&o);
+
+    Stack* s = stack_new();
+    stack_print(s);
+    stack_push(s, 1);
+    stack_push(s, 2);
+    stack_push(s, 3);
+    stack_print(s);
+    printf("%d\n", stack_pop(s));
+    stack_print(s);
+    printf("%d\n", stack_peek(s));
+    stack_print(s);
+    stack_free(&s);
 }

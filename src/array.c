@@ -26,8 +26,14 @@ void array_free(Array **c) {
     *c = NULL;
 }
 
-size_t array_size(Array *c) { return c->size; }
-size_t array_cap(Array *c) { return c->cap; }
+size_t array_size(Array *c) {
+    ABORT_IF_NULL(c);
+    return c->size;
+}
+size_t array_cap(Array *c) {
+    ABORT_IF_NULL(c);
+    return c->cap;
+}
 
 void array_print(Array *c) {
     ABORT_IF_NULL(c);
@@ -93,9 +99,13 @@ void array_delete_at(Array *c, int i) {
     c->size--;
 }
 
-int array_get(Array *c, int i) { return c->data[i]; }
+int array_get(Array *c, int i) {
+    ABORT_IF_NULL(c);
+    return c->data[i];
+}
 
 int array_index_of(Array *c, int n) {
+    ABORT_IF_NULL(c);
     for (int i = 0; i < c->size; i++) {
         if (c->data[i] == n) {
             return i;
