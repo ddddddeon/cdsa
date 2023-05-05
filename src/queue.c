@@ -56,16 +56,16 @@ QueueItem queue_dequeue(Queue *q) {
 
     QueueNode *old_front = q->front;
 
-    if (q->length == 1) {
-        q->back = NULL;
-    }
-
     if (q->length > 1) {
         q->front = old_front->prev;
     }
 
     q->front->next = NULL;
     q->length--;
+    if (q->length == 0) {
+        q->back = NULL;
+    }
+
     int value = old_front->value;
     free(old_front);
 
