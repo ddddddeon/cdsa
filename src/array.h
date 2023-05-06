@@ -1,6 +1,7 @@
 #ifndef ARRAY_H
 #define ARRAY_H
 
+#include <stdbool.h>
 #include <stddef.h>
 
 typedef struct Array Array;
@@ -17,5 +18,8 @@ int array_update_at(Array *c, int n, int i);
 void array_delete_at(Array *c, int i);
 int array_fill(Array *c, int n);
 void array_reverse(Array *c);
+void array_bubble_sort(Array *c);
+int array_max_value(Array *c);
+bool array_has_duplicate(Array *c);
 
 #endif /* ARRAY_H */

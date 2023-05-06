@@ -115,6 +115,34 @@ int array_index_of(Array *c, int n) {
     return -1;
 }
 
+// O(n)
+int array_max_value(Array *c) {
+    ABORT_IF_NULL(c);
+    int max = c->data[0];
+    for (int i = 1; i < c->size; i++) {
+        if (c->data[i] > max) {
+            max = c->data[i];
+        }
+    }
+    return max;
+}
+
+// O(n * 2) -> O(n)
+bool array_has_duplicate(Array *c) {
+    ABORT_IF_NULL(c);
+
+    // might allocate a massive array
+    bool existing_nums[array_max_value(c) + 1];
+
+    for (int i = 0; i <= c->size; i++) {
+        if (existing_nums[c->data[i]] == true) {
+            return true;
+        }
+        existing_nums[c->data[i]] = true;
+    }
+    return false;
+}
+
 void array_fill(Array *c, int n) {
     ABORT_IF_NULL(c);
     c->size = 0;
@@ -130,5 +158,27 @@ void array_reverse(Array *c) {
         int tmp = c->data[i];
         *(c->data + i) = c->data[c->size - i - 1];
         *(c->data + c->size - i - 1) = tmp;
+    }
+}
+
+void array_bubble_sort(Array *c) {
+    ABORT_IF_NULL(c);
+    bool sorted = false;
+    int top = c->size - 1;
+
+    // we could just run while top > 0,
+    // but if we pass through while top is still > 0 and
+    // it's already sorted, we want to finish early
+    while (!sorted) {
+        sorted = true;
+        for (int i = 0; i < top; i++) {
+            if (c->data[i] > c->data[i + 1]) {
+                sorted = false;
+                int tmp = c->data[i];
+                c->data[i] = c->data[i + 1];
+                c->data[i + 1] = tmp;
+            }
+        }
+        top--;
     }
 }
