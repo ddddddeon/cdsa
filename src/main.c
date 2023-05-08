@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+#include "array.h"
 #include "cdsa.h"
 
 int main(int argc, char* argv[]) {
@@ -22,7 +23,7 @@ int main(int argc, char* argv[]) {
     Array* b = array_copy(a);
     array_print(b);
     array_bubble_sort(a);
-    array_insertion_sort(b);
+    array_selection_sort(b);
     array_print(a);
     array_print(b);
     printf("%d\n", array_max_value(a));

@@ -184,8 +184,8 @@ void array_bubble_sort(Array *c) {
             if (c->data[i] > c->data[i + 1]) {
                 sorted = false;
                 int tmp = c->data[i];
-                c->data[i] = c->data[i + 1];
-                c->data[i + 1] = tmp;
+                *(c->data + i) = c->data[i + 1];
+                *(c->data + i + 1) = tmp;
             }
         }
         top--;
@@ -193,7 +193,7 @@ void array_bubble_sort(Array *c) {
 }
 
 // O(n^2) but faster than bubble sort
-void array_insertion_sort(Array *c) {
+void array_selection_sort(Array *c) {
     ABORT_IF_NULL(c);
     for (int i = 0; i < c->size; i++) {
         int lowest_number_idx = i;
