@@ -192,7 +192,7 @@ void array_bubble_sort(Array *c) {
     }
 }
 
-// O(n^2) but faster than bubble sort
+// O(n^2) but faster than bubble sort for large arrays
 void array_selection_sort(Array *c) {
     ABORT_IF_NULL(c);
     for (int i = 0; i < c->size; i++) {
