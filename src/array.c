@@ -161,6 +161,7 @@ void array_reverse(Array *c) {
     }
 }
 
+// O(n^2)
 void array_bubble_sort(Array *c) {
     ABORT_IF_NULL(c);
     bool sorted = false;
@@ -180,5 +181,25 @@ void array_bubble_sort(Array *c) {
             }
         }
         top--;
+    }
+}
+
+// O(n^2) but faster than bubble sort
+void array_insertion_sort(Array *c) {
+    ABORT_IF_NULL(c);
+    for (int i = 0; i < c->size; i++) {
+        int lowest_number_idx = i;
+
+        for (int j = i + 1; j < c->size; j++) {
+            if (c->data[j] < c->data[lowest_number_idx]) {
+                lowest_number_idx = j;
+            }
+        }
+
+        if (i != lowest_number_idx) {
+            int tmp = c->data[i];
+            *(c->data + i) = c->data[lowest_number_idx];
+            *(c->data + lowest_number_idx) = tmp;
+        }
     }
 }
