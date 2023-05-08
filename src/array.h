@@ -7,6 +7,7 @@
 typedef struct Array Array;
 
 Array *array_new(size_t len);
+Array *array_copy(Array *c);
 void array_free(Array **c);
 size_t array_size(Array *c);
 void array_print(Array *c);

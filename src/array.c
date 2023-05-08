@@ -20,6 +20,14 @@ Array *array_new(size_t len) {
     return p;
 }
 
+Array *array_copy(Array *c) {
+    Array *new = malloc(sizeof(Array) + c->size * sizeof(int));
+    new->cap = c->cap;
+    new->size = c->size;
+    memcpy(new->data, c->data, c->size * sizeof(int));
+    return new;
+}
+
 void array_free(Array **c) {
     ABORT_IF_NULL(c);
     free(*c);

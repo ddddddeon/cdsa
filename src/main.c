@@ -19,9 +19,12 @@ int main(int argc, char* argv[]) {
     array_insert(a, 2);
     array_insert(a, 35);
     array_print(a);
-    array_insertion_sort(a);
-    // array_bubble_sort(a);
+    Array* b = array_copy(a);
+    array_print(b);
+    array_bubble_sort(a);
+    array_insertion_sort(b);
     array_print(a);
+    array_print(b);
     printf("%d\n", array_max_value(a));
     printf("%s\n", array_has_duplicate(a) ? "true" : "false");
     printf("%d\n", array_get(a, 2));
