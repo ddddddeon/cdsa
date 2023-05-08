@@ -16,14 +16,14 @@ typedef struct QueueNode QueueNode;
 struct Queue {
     QueueNode *front;
     QueueNode *back;
-    int length;
+    int size;
 };
 
 Queue *queue_new() {
     Queue *p = malloc(sizeof(Queue));
     p->front = NULL;
     p->back = NULL;
-    p->length = 0;
+    p->size = 0;
     return p;
 }
 
@@ -32,7 +32,7 @@ void queue_enqueue(Queue *q, int n) {
     QueueNode *node = malloc(sizeof(QueueNode));
     node->value = n;
 
-    if (q->length == 0) {
+    if (q->size == 0) {
         node->next = NULL;
         node->prev = NULL;
         q->front = node;
@@ -42,7 +42,7 @@ void queue_enqueue(Queue *q, int n) {
         node->next = old_back;
     }
     q->back = node;
-    q->length++;
+    q->size++;
 }
 
 QueueItem queue_dequeue(Queue *q) {
@@ -50,19 +50,19 @@ QueueItem queue_dequeue(Queue *q) {
 
     QueueItem item = {.exists = false, .value = 0};
 
-    if (q->length == 0) {
+    if (q->size == 0) {
         return item;
     }
 
     QueueNode *old_front = q->front;
 
-    if (q->length > 1) {
+    if (q->size > 1) {
         q->front = old_front->prev;
     }
 
     q->front->next = NULL;
-    q->length--;
-    if (q->length == 0) {
+    q->size--;
+    if (q->size == 0) {
         q->back = NULL;
     }
 
@@ -74,9 +74,9 @@ QueueItem queue_dequeue(Queue *q) {
     return item;
 }
 
-int queue_length(Queue *q) {
+int queue_size(Queue *q) {
     ABORT_IF_NULL(q);
-    return q->length;
+    return q->size;
 }
 
 void queue_print(Queue *q) {
@@ -92,7 +92,7 @@ void queue_print(Queue *q) {
 
 void queue_free(Queue **q) {
     ABORT_IF_NULL(q);
-    while ((*q)->length != 0) {
+    while ((*q)->size != 0) {
         queue_dequeue(*q);
     }
 

@@ -34,6 +34,10 @@ LinkedListNode *linked_list_node_new(int n) {
     return p;
 }
 
+int linked_list_size(LinkedList *ll) { return ll->size; }
+int linked_list_first(LinkedList *ll) { return ll->first->value; }
+int linked_list_last(LinkedList *ll) { return ll->last->value; }
+
 void linked_list_print(LinkedList *ll) {
     ABORT_IF_NULL(ll);
     LinkedListNode *curr = ll->first;
@@ -53,6 +57,14 @@ void linked_list_print(LinkedList *ll) {
 void linked_list_insert_beginning(LinkedList *ll, int n) {
     ABORT_IF_NULL(ll);
     LinkedListNode *new = linked_list_node_new(n);
+
+    if (ll->size == 0) {
+        ll->last = new;
+        ll->first = new;
+        ll->size++;
+        return;
+    }
+
     new->prev = NULL;
     ll->first->prev = new;
     new->next = ll->first;
@@ -117,15 +129,7 @@ void linked_list_update_at(LinkedList *ll, int n, int idx) {
     for (int i = 0; i < idx; i++) {
         curr = curr->next;
     }
-
-    LinkedListNode *next = curr->next;
-    LinkedListNode *prev = curr->prev;
-    LinkedListNode *new = linked_list_node_new(n);
-    new->prev = prev;
-    new->next = next;
-    prev->next = new;
-    next->prev = new;
-    free(curr);
+    curr->value = n;
 }
 
 void linked_list_delete(LinkedList *ll, int n) {
@@ -137,6 +141,15 @@ void linked_list_delete(LinkedList *ll, int n) {
         ll->first = new;
         ll->first->prev = NULL;
         ll->size--;
+        return;
+    }
+
+    if (ll->last->value == n) {
+        LinkedListNode *tmp = ll->last;
+        ll->last->prev->next = NULL;
+        ll->last = ll->last->prev;
+        ll->size--;
+        free(tmp);
         return;
     }
 

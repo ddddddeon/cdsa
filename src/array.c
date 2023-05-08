@@ -140,14 +140,15 @@ bool array_has_duplicate(Array *c) {
     ABORT_IF_NULL(c);
 
     // might allocate a massive array
-    bool existing_nums[array_max_value(c) + 1];
+    int existing_nums[array_max_value(c) + 1];
 
     for (int i = 0; i <= c->size; i++) {
-        if (existing_nums[c->data[i]] == true) {
+        if (existing_nums[c->data[i]] == 1) {
             return true;
         }
-        existing_nums[c->data[i]] = true;
+        existing_nums[c->data[i]] = 1;
     }
+
     return false;
 }
 

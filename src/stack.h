@@ -14,6 +14,7 @@ Stack *stack_new();
 void stack_push(Stack *s, int n);
 StackItem stack_pop(Stack *s);
 StackItem stack_peek(Stack *s);
+int stack_size(Stack *s);
 void stack_print(Stack *s);
 void stack_free(Stack **s);
 

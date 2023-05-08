@@ -15,13 +15,13 @@ typedef struct StackNode StackNode;
 
 struct Stack {
     StackNode *head;
-    int length;
+    int size;
 };
 
 Stack *stack_new() {
     Stack *p = malloc(sizeof(Stack));
     p->head = NULL;
-    p->length = 0;
+    p->size = 0;
     return p;
 }
 void stack_push(Stack *s, int n) {
@@ -37,7 +37,7 @@ void stack_push(Stack *s, int n) {
         node->next = head;
         s->head = node;
     }
-    s->length++;
+    s->size++;
 }
 
 StackItem stack_pop(Stack *s) {
@@ -53,7 +53,7 @@ StackItem stack_pop(Stack *s) {
     int popped = head->value;
     s->head = head->next;
     free(head);
-    s->length--;
+    s->size--;
 
     item.exists = true;
     item.value = popped;
@@ -86,14 +86,14 @@ void stack_print(Stack *s) {
     printf("]\n");
 }
 
-int stack_length(Stack *s) {
+int stack_size(Stack *s) {
     ABORT_IF_NULL(s);
-    return s->length;
+    return s->size;
 }
 
 void stack_free(Stack **s) {
     ABORT_IF_NULL(*s);
-    while ((*s)->length != 0) {
+    while ((*s)->size != 0) {
         stack_pop(*s);
     }
 
