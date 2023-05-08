@@ -6,6 +6,7 @@
 typedef struct OrderedSet OrderedSet;
 
 OrderedSet *ordered_set_new(size_t len);
+OrderedSet *ordered_set_copy(OrderedSet *c);
 void ordered_set_free(OrderedSet **c);
 size_t ordered_set_size(OrderedSet *c);
 void ordered_set_print(OrderedSet *c);

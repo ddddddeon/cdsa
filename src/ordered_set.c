@@ -20,6 +20,14 @@ OrderedSet *ordered_set_new(size_t len) {
     return p;
 }
 
+OrderedSet *ordered_set_copy(OrderedSet *c) {
+    OrderedSet *new = malloc(sizeof(OrderedSet) + c->cap * sizeof(int));
+    new->size = c->size;
+    new->cap = c->cap;
+    memcpy(new->data, c->data, c->cap * sizeof(int));
+    return new;
+}
+
 void ordered_set_free(OrderedSet **c) {
     ABORT_IF_NULL(c);
     free(*c);

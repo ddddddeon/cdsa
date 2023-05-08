@@ -98,6 +98,8 @@ int main(int argc, char* argv[]) {
     ordered_set_print(o);
     ordered_set_insert(o, 24);
     ordered_set_print(o);
+    OrderedSet* o2 = ordered_set_copy(o);
+    ordered_set_print(o2);
     int i = ordered_set_index_of(o, 24);
     printf("%d\n", i);
     int j = ordered_set_index_of(o, 4);

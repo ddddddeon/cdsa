@@ -21,10 +21,10 @@ Array *array_new(size_t len) {
 }
 
 Array *array_copy(Array *c) {
-    Array *new = malloc(sizeof(Array) + c->size * sizeof(int));
+    Array *new = malloc(sizeof(Array) + c->cap * sizeof(int));
     new->cap = c->cap;
     new->size = c->size;
-    memcpy(new->data, c->data, c->size * sizeof(int));
+    memcpy(new->data, c->data, c->cap * sizeof(int));
     return new;
 }
 
