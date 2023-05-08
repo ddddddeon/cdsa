@@ -17,11 +17,13 @@ TEST_OUTFILE=bin/test
 
 .PHONY: $(NAME)
 $(NAME): library
-	set -e; 	$(CC) -shared -o $(LIB_OUTFILE) $(wildcard bin/*.o); \
+	set -e;\
+	$(CC) -shared -o $(LIB_OUTFILE) $(wildcard bin/*.o); \
 	$(CC) -o $(TEST_OUTFILE) $(TEST_INFILES) $(LIB_OUTFILE) $(CFLAGS) $(USE_LINKER) $(LIBS);
 
 library:
-	set -e; 	if [ ! -d bin ]; then mkdir bin; fi; \
+	set -e; \
+	if [ ! -d bin ]; then mkdir bin; fi; \
 	for FILE in $(INFILES); do \
 		$(CC) $(CFLAGS)-c -fPIC $$FILE -o bin/$$(basename $${FILE%%.*}).o;\
 	done;
