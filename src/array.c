@@ -212,3 +212,29 @@ void array_selection_sort(Array *c) {
         }
     }
 }
+
+// O(n^2) but faster than bubble/selection sort ON AVERAGE
+// because selection sort doesn't have mechanism to end passthrough early
+void array_insertion_sort(Array *c) {
+    ABORT_IF_NULL(c);
+
+    if (c->size <= 1) {
+        return;
+    }
+
+    for (int i = 1; i < c->size; i++) {
+        int tmp = c->data[i];
+        int position = i - 1;
+
+        while (position >= 0) {
+            if (c->data[position] > tmp) {
+                c->data[position + 1] = c->data[position];
+                position--;
+            } else {
+                break;
+            }
+
+            c->data[position + 1] = tmp;
+        }
+    }
+}
