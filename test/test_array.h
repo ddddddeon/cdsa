@@ -259,6 +259,28 @@ START_TEST(test_array_insertion_sort) {
 }
 END_TEST
 
+START_TEST(test_array_quicksort) {
+    TEST_INFO;
+    Array* a = array_new(10);
+    array_insert(a, 8);
+    array_insert(a, 5);
+    array_insert(a, 10);
+    array_insert(a, 1);
+    array_insert(a, -1);
+    array_insert(a, 3);
+    array_insert(a, 2);
+
+    array_quicksort(a, 0, array_size(a) - 1);
+
+    ck_assert_int_eq(array_get(a, 0), -1);
+    ck_assert_int_eq(array_get(a, 1), 1);
+    ck_assert_int_eq(array_get(a, 2), 2);
+    ck_assert_int_eq(array_get(a, 6), 10);
+
+    array_free(&a);
+}
+END_TEST
+
 Suite* array_suite(void) {
     Suite* suite;
     TCase* tc_core;
@@ -280,6 +302,7 @@ Suite* array_suite(void) {
     tcase_add_test(tc_core, test_array_bubble_sort);
     tcase_add_test(tc_core, test_array_selection_sort);
     tcase_add_test(tc_core, test_array_insertion_sort);
+    tcase_add_test(tc_core, test_array_quicksort);
 
     suite_add_tcase(suite, tc_core);
 

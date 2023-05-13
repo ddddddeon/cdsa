@@ -26,5 +26,6 @@ void array_reverse(Array *c);
 void array_bubble_sort(Array *c);
 void array_selection_sort(Array *c);
 void array_insertion_sort(Array *c);
+void array_quicksort(Array *c, int left, int right);
 
 #endif /* ARRAY_H */

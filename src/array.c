@@ -238,3 +238,47 @@ void array_insertion_sort(Array *c) {
         }
     }
 }
+
+int partition(Array *c, int left, int right) {
+    ABORT_IF_NULL(c);
+
+    int pivot_index = right;
+    int pivot = c->data[pivot_index];
+
+    right -= 1;
+
+    while (true) {
+        while (c->data[left] < pivot) {
+            left += 1;
+        }
+
+        while (c->data[right] > pivot) {
+            right -= 1;
+        }
+
+        if (left >= right) {
+            break;
+        } else {
+            int tmp = c->data[left];
+            c->data[left] = c->data[right];
+            c->data[right] = tmp;
+            left += 1;
+        }
+    }
+
+    int tmp = c->data[left];
+    c->data[left] = c->data[pivot_index];
+    c->data[pivot_index] = tmp;
+
+    return left;
+}
+
+void array_quicksort(Array *c, int left, int right) {
+    if (right - left <= 0) {
+        return;
+    }
+
+    int pivot_index = partition(c, left, right);
+    array_quicksort(c, left, pivot_index - 1);
+    array_quicksort(c, pivot_index + 1, right);
+}
