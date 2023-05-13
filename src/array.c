@@ -135,23 +135,6 @@ int array_max_value(Array *c) {
     return max;
 }
 
-// O(n * 2) -> O(n)
-bool array_has_duplicate(Array *c) {
-    ABORT_IF_NULL(c);
-
-    // might allocate a massive array
-    int existing_nums[array_max_value(c) + 1];
-
-    for (int i = 0; i <= c->size; i++) {
-        if (existing_nums[c->data[i]] == 1) {
-            return true;
-        }
-        existing_nums[c->data[i]] = 1;
-    }
-
-    return false;
-}
-
 void array_fill(Array *c, int n) {
     ABORT_IF_NULL(c);
     c->size = 0;
@@ -281,4 +264,18 @@ void array_quicksort(Array *c, int left, int right) {
     int pivot_index = partition(c, left, right);
     array_quicksort(c, left, pivot_index - 1);
     array_quicksort(c, pivot_index + 1, right);
+}
+
+bool array_has_duplicate(Array *c) {
+    ABORT_IF_NULL(c);
+
+    array_quicksort(c, 0, array_size(c) - 1);
+
+    for (int i = 0; i < c->size - 1; i++) {
+        if (c->data[i] == c->data[i + 1]) {
+            return true;
+        }
+    }
+
+    return false;
 }
