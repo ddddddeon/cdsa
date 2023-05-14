@@ -93,6 +93,21 @@ void binary_tree_node_bf_print(BinaryTreeNode *n) {
     if (n == NULL) {
         return;
     }
+
+    queue_enqueue(q, n);
+    while (queue_size(q) != 0) {
+        BinaryTreeNode *node = (BinaryTreeNode *)queue_dequeue(q);
+
+        printf("%d ", node->value);
+
+        if (node->left != NULL) {
+            queue_enqueue(q, node->left);
+        }
+
+        if (node->right != NULL) {
+            queue_enqueue(q, node->right);
+        }
+    }
 }
 
 void binary_tree_bf_print(BinaryTree *t) {

@@ -6,7 +6,7 @@
 #include "common.h"
 
 struct QueueNode {
-    int value;
+    void *value;
     struct QueueNode *next;
     struct QueueNode *prev;
 };
@@ -27,10 +27,10 @@ Queue *queue_new() {
     return p;
 }
 
-void queue_enqueue(Queue *q, int n) {
+void queue_enqueue(Queue *q, void *item) {
     ABORT_IF_NULL(q);
     QueueNode *node = malloc(sizeof(QueueNode));
-    node->value = n;
+    node->value = item;
 
     if (q->size == 0) {
         node->next = NULL;
@@ -45,13 +45,11 @@ void queue_enqueue(Queue *q, int n) {
     q->size++;
 }
 
-QueueItem queue_dequeue(Queue *q) {
+void *queue_dequeue(Queue *q) {
     ABORT_IF_NULL(q);
 
-    QueueItem item = {.exists = false, .value = 0};
-
     if (q->size == 0) {
-        return item;
+        return NULL;
     }
 
     QueueNode *old_front = q->front;
@@ -66,12 +64,10 @@ QueueItem queue_dequeue(Queue *q) {
         q->back = NULL;
     }
 
-    int value = old_front->value;
+    void *value = old_front->value;
     free(old_front);
 
-    item.exists = true;
-    item.value = value;
-    return item;
+    return value;
 }
 
 int queue_size(Queue *q) {
@@ -79,12 +75,13 @@ int queue_size(Queue *q) {
     return q->size;
 }
 
+// only works for ints, not other pointers
 void queue_print(Queue *q) {
     ABORT_IF_NULL(q);
     QueueNode *curr = q->back;
     printf("[ ");
     while (curr != NULL) {
-        printf("%d ", curr->value);
+        printf("%d ", *(int *)curr->value);
         curr = curr->next;
     }
     printf("]\n");

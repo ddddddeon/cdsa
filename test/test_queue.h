@@ -19,8 +19,11 @@ END_TEST
 START_TEST(test_queue_enqueue) {
     TEST_INFO;
     Queue *q = queue_new();
-    queue_enqueue(q, 3);
-    queue_enqueue(q, 2);
+    int num1 = 3;
+    int num2 = 2;
+
+    queue_enqueue(q, &num1);
+    queue_enqueue(q, &num2);
 
     ck_assert_int_eq(queue_size(q), 2);
 
@@ -31,18 +34,21 @@ END_TEST
 START_TEST(test_queue_dequeue) {
     TEST_INFO;
     Queue *q = queue_new();
-    queue_enqueue(q, 3);
-    queue_enqueue(q, 2);
-    QueueItem item = queue_dequeue(q);
-    QueueItem item2 = queue_dequeue(q);
-    QueueItem should_not_exist = queue_dequeue(q);
+    int num1 = 3;
+    int num2 = 2;
+
+    queue_enqueue(q, &num1);
+    queue_enqueue(q, &num2);
+    void *item = queue_dequeue(q);
+    void *item2 = queue_dequeue(q);
+    void *should_not_exist = queue_dequeue(q);
 
     ck_assert_int_eq(queue_size(q), 0);
-    ck_assert(item.exists);
-    ck_assert_int_eq(item.value, 3);
-    ck_assert(item2.exists);
-    ck_assert_int_eq(item2.value, 2);
-    ck_assert(!should_not_exist.exists);
+    ck_assert_ptr_ne(item, NULL);
+    ck_assert_int_eq(*(int *)item, 3);
+    ck_assert_ptr_ne(item2, NULL);
+    ck_assert_int_eq(*(int *)item2, 2);
+    ck_assert_ptr_eq(should_not_exist, NULL);
 
     queue_free(&q);
 }

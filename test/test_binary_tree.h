@@ -22,14 +22,21 @@ START_TEST(test_binary_tree_insert) {
     TEST_INFO;
     BinaryTree *t = binary_tree_new();
 
-    binary_tree_insert(t, 1);
+    binary_tree_insert(t, 10);
     binary_tree_insert(t, 3);
+    binary_tree_insert(t, 12);
+    binary_tree_insert(t, 15);
     binary_tree_insert(t, 2);
-    binary_tree_insert(t, 4);
 
-    binary_tree_print(t);
+    /*        10
+            3    12
+          2        15
+    */
 
-    // linked_list_free(&t);
+    binary_tree_df_print(t);
+    binary_tree_bf_print(t);
+
+    // binary_tree_free(&t);
 
     // ck_assert_ptr_eq(t, NULL);
 }
