@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "test_array.h"
+#include "test_binary_tree.h"
 #include "test_linked_list.h"
 #include "test_ordered_set.h"
 #include "test_queue.h"
@@ -16,12 +17,14 @@ int main(int argc, char* argv[]) {
     Suite* ordered_set_tests = ordered_set_suite();
     Suite* stack_tests = stack_suite();
     Suite* queue_tests = queue_suite();
+    Suite* binary_tree_tests = binary_tree_suite();
 
     runner = srunner_create(array_tests);
     srunner_add_suite(runner, linked_list_tests);
     srunner_add_suite(runner, ordered_set_tests);
     srunner_add_suite(runner, stack_tests);
     srunner_add_suite(runner, queue_tests);
+    srunner_add_suite(runner, binary_tree_tests);
 
     srunner_run_all(runner, CK_NORMAL);
     number_failed = srunner_ntests_failed(runner);
