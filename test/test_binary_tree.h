@@ -8,21 +8,19 @@
 
 START_TEST(test_binary_tree_new) {
     TEST_INFO;
-    BinaryTree *t = binary_tree_new();
+    BinaryTree *t = binary_tree_new(10);
 
     ck_assert_ptr_ne(t, NULL);
 
-    // linked_list_free(&t);
-
-    // ck_assert_ptr_eq(t, NULL);
+    binary_tree_free(&t);
+    ck_assert_ptr_eq(t, NULL);
 }
 END_TEST
 
 START_TEST(test_binary_tree_insert) {
     TEST_INFO;
-    BinaryTree *t = binary_tree_new();
 
-    binary_tree_insert(t, 10);
+    BinaryTree *t = binary_tree_new(10);
     binary_tree_insert(t, 3);
     binary_tree_insert(t, 12);
     binary_tree_insert(t, 15);
@@ -36,9 +34,53 @@ START_TEST(test_binary_tree_insert) {
     binary_tree_df_print(t);
     binary_tree_bf_print(t);
 
-    // binary_tree_free(&t);
+    binary_tree_free(&t);
+    ck_assert_ptr_eq(t, NULL);
+}
+END_TEST
 
-    // ck_assert_ptr_eq(t, NULL);
+START_TEST(test_binary_tree_delete) {
+    TEST_INFO;
+    BinaryTree *t = binary_tree_new(10);
+    binary_tree_insert(t, 3);
+    binary_tree_insert(t, 12);
+    binary_tree_insert(t, 15);
+    binary_tree_insert(t, 2);
+
+    binary_tree_bf_print(t);
+
+    binary_tree_delete(&t, 10);
+    ck_assert_int_eq(binary_tree_get_value(t), 12);
+    binary_tree_delete(&t, 12);
+    ck_assert_int_eq(binary_tree_get_value(t), 15);
+    binary_tree_delete(&t, 2);
+    ck_assert_int_eq(binary_tree_get_value(t), 15);
+    binary_tree_delete(&t, 3);
+    ck_assert_int_eq(binary_tree_get_value(t), 15);
+    binary_tree_delete(&t, 15);
+    ck_assert_ptr_eq(t, NULL);
+
+    binary_tree_free(&t);
+    ck_assert_ptr_eq(t, NULL);
+}
+END_TEST
+
+START_TEST(test_binary_tree_search) {
+    TEST_INFO;
+    BinaryTree *t = binary_tree_new(10);
+    binary_tree_insert(t, 3);
+    binary_tree_insert(t, 12);
+    binary_tree_insert(t, 15);
+    binary_tree_insert(t, 2);
+
+    ck_assert(binary_tree_search(t, 15));
+    ck_assert(binary_tree_search(t, 2));
+    ck_assert(binary_tree_search(t, 10));
+    ck_assert(!binary_tree_search(t, 16));
+    ck_assert(!binary_tree_search(t, 0));
+
+    binary_tree_free(&t);
+    ck_assert_ptr_eq(t, NULL);
 }
 END_TEST
 
@@ -51,6 +93,8 @@ Suite *binary_tree_suite(void) {
 
     tcase_add_test(tc_core, test_binary_tree_new);
     tcase_add_test(tc_core, test_binary_tree_insert);
+    tcase_add_test(tc_core, test_binary_tree_delete);
+    tcase_add_test(tc_core, test_binary_tree_search);
 
     suite_add_tcase(suite, tc_core);
 
