@@ -8,6 +8,7 @@
 #include "test_ordered_set.h"
 #include "test_queue.h"
 #include "test_stack.h"
+#include "test_trie.h"
 
 int main(int argc, char* argv[]) {
     int number_failed;
@@ -20,6 +21,7 @@ int main(int argc, char* argv[]) {
     Suite* queue_tests = queue_suite();
     Suite* binary_tree_tests = binary_tree_suite();
     Suite* max_heap_tests = max_heap_suite();
+    Suite* trie_tests = trie_suite();
 
     runner = srunner_create(array_tests);
     srunner_add_suite(runner, linked_list_tests);
@@ -28,6 +30,7 @@ int main(int argc, char* argv[]) {
     srunner_add_suite(runner, queue_tests);
     srunner_add_suite(runner, binary_tree_tests);
     srunner_add_suite(runner, max_heap_tests);
+    srunner_add_suite(runner, trie_tests);
 
     srunner_run_all(runner, CK_NORMAL);
     number_failed = srunner_ntests_failed(runner);
