@@ -160,8 +160,6 @@ void binary_tree_bf_print(BinaryTree *t) {
 }
 
 void binary_tree_free(BinaryTree **t) {
-    BinaryTree *curr = *t;
-
     if (*t == NULL) {
         return;
     }
