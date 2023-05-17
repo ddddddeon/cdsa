@@ -36,28 +36,26 @@ START_TEST(test_max_heap_insert) {
     max_heap_insert(h, 3);
 
     /*
-              10
-            5    3
+            10
+          5    3
     */
 
     max_heap_insert(h, 20);
 
     /*
-             10
-           5    3
-         20
-     */
+            10
+          5    3
+        20
 
-    /*
-         10
-       20    3
-     5
-    */
 
-    /*
-         20
-       10    3
-     5
+            10
+          20   3
+        5
+
+
+            20
+          10   3
+        5
     */
 
     ck_assert_int_eq(max_heap_top(h), 20);
@@ -81,23 +79,20 @@ START_TEST(test_max_heap_delete) {
     int popped = max_heap_delete(h, 20);
 
     /*
-         2
-      10   3
-    5
+             2
+          10   3
+        5
 
-     */
 
-    /*
-          10
-       2      3
-     5
-     */
+            10
+          2    3
+        5
 
-    /*
-          10
-       5      3
-     2
-     */
+
+            10
+          5    3
+        2
+    */
 
     ck_assert_int_eq(popped, 20);
     ck_assert_int_eq(max_heap_top(h), 10);
