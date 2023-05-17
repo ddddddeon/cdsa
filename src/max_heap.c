@@ -110,6 +110,8 @@ int max_heap_delete(MaxHeap *h) {
 
     int last_value = max_heap_bottom(h);
     h->bottom_idx--;
+
+    int popped = h->heap[0];
     *(h->heap + 0) = last_value;
 
     int trickle_idx = 0;
@@ -118,14 +120,10 @@ int max_heap_delete(MaxHeap *h) {
     while (max_heap_has_greater_child(h, trickle_idx)) {
         int greater_child_idx = max_heap_greater_child(h, trickle_idx);
         int tmp = h->heap[trickle_idx];
-        printf("swapping %d and %d\n", h->heap[trickle_idx],
-               h->heap[greater_child_idx]);
-
         *(h->heap + trickle_idx) = h->heap[greater_child_idx];
         *(h->heap + greater_child_idx) = tmp;
-
         trickle_idx = greater_child_idx;
-
-        max_heap_print(h);
     }
+
+    return popped;
 }

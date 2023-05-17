@@ -65,14 +65,20 @@ START_TEST(test_max_heap_insert) {
 
     max_heap_insert(h, 2);
     ck_assert_int_eq(max_heap_bottom(h), 2);
+}
+END_TEST
 
-    /*
-         20
-       10    3
-     5   2
-    */
+START_TEST(test_max_heap_delete) {
+    TEST_INFO;
 
-    max_heap_delete(h, 20);
+    MaxHeap *h = max_heap_new(32);
+    max_heap_insert(h, 10);
+    max_heap_insert(h, 5);
+    max_heap_insert(h, 3);
+    max_heap_insert(h, 20);
+    max_heap_insert(h, 2);
+
+    int popped = max_heap_delete(h, 20);
 
     /*
          2
@@ -93,8 +99,7 @@ START_TEST(test_max_heap_insert) {
      2
      */
 
-    max_heap_print(h);
-
+    ck_assert_int_eq(popped, 20);
     ck_assert_int_eq(max_heap_top(h), 10);
     ck_assert_int_eq(max_heap_bottom(h), 2);
 }
@@ -109,7 +114,7 @@ Suite *max_heap_suite(void) {
 
     tcase_add_test(tc_core, test_max_heap_new);
     tcase_add_test(tc_core, test_max_heap_insert);
-    //    tcase_add_test(tc_core, test_max_heap_delete);
+    tcase_add_test(tc_core, test_max_heap_delete);
 
     suite_add_tcase(suite, tc_core);
 
