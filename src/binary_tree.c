@@ -22,9 +22,25 @@ BinaryTree *binary_tree_new(int value) {
     return p;
 }
 
-int binary_tree_get_value(BinaryTree *t) {
+int binary_tree_value(BinaryTree *t) {
     ABORT_IF_NULL(t);
     return t->value;
+}
+
+BinaryTree *binary_tree_left(BinaryTree *t) {
+    if (t == NULL) {
+        return NULL;
+    }
+
+    return t->left;
+}
+
+BinaryTree *binary_tree_right(BinaryTree *t) {
+    if (t == NULL) {
+        return NULL;
+    }
+
+    return t->right;
 }
 
 void binary_tree_insert(BinaryTree *t, int value) {

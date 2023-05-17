@@ -31,8 +31,13 @@ START_TEST(test_binary_tree_insert) {
           2        15
     */
 
-    binary_tree_df_print(t);
-    binary_tree_bf_print(t);
+    ck_assert_int_eq(binary_tree_value(t), 10);
+    ck_assert_int_eq(binary_tree_value(binary_tree_left(t)), 3);
+    ck_assert_int_eq(binary_tree_value(binary_tree_right(t)), 12);
+    ck_assert_int_eq(binary_tree_value(binary_tree_left(binary_tree_left(t))),
+                     2);
+    ck_assert_int_eq(binary_tree_value(binary_tree_right(binary_tree_right(t))),
+                     15);
 
     binary_tree_free(&t);
     ck_assert_ptr_eq(t, NULL);
@@ -47,16 +52,14 @@ START_TEST(test_binary_tree_delete) {
     binary_tree_insert(t, 15);
     binary_tree_insert(t, 2);
 
-    binary_tree_bf_print(t);
-
     binary_tree_delete(&t, 10);
-    ck_assert_int_eq(binary_tree_get_value(t), 12);
+    ck_assert_int_eq(binary_tree_value(t), 12);
     binary_tree_delete(&t, 12);
-    ck_assert_int_eq(binary_tree_get_value(t), 15);
+    ck_assert_int_eq(binary_tree_value(t), 15);
     binary_tree_delete(&t, 2);
-    ck_assert_int_eq(binary_tree_get_value(t), 15);
+    ck_assert_int_eq(binary_tree_value(t), 15);
     binary_tree_delete(&t, 3);
-    ck_assert_int_eq(binary_tree_get_value(t), 15);
+    ck_assert_int_eq(binary_tree_value(t), 15);
     binary_tree_delete(&t, 15);
     ck_assert_ptr_eq(t, NULL);
 
