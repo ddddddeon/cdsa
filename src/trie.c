@@ -95,3 +95,24 @@ void trie_free(Trie **t) {
     free(*t);
     *t = NULL;
 }
+
+void trie_delete(Trie *t, const char *word) {
+    ABORT_IF_NULL(t);
+
+    Trie *curr = t;
+    Trie *prev = NULL;
+    int len = word_len(word);
+
+    for (int i = 0; i < len; i++) {
+        int idx = word[i] - 'a';
+
+        if (curr->children[idx] == NULL) {
+            return;
+        }
+
+        prev = curr;
+        curr = curr->children[idx];
+    }
+
+    prev->word = NULL;
+}

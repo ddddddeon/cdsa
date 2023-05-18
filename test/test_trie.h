@@ -35,6 +35,29 @@ START_TEST(test_trie_insert) {
 }
 END_TEST
 
+START_TEST(test_trie_delete) {
+    TEST_INFO;
+    Trie *t = trie_new();
+
+    trie_insert(t, "chris");
+    trie_insert(t, "cool");
+    trie_insert(t, "cooler");
+
+    trie_delete(t, "cool");
+
+    ck_assert(!trie_search(t, "cool"));
+    ck_assert(trie_search(t, "cooler"));
+
+    trie_insert(t, "cool");
+    trie_delete(t, "cooler");
+
+    ck_assert(trie_search(t, "cool"));
+    ck_assert(!trie_search(t, "cooler"));
+
+    trie_free(&t);
+}
+END_TEST
+
 Suite *trie_suite(void) {
     Suite *suite;
     TCase *tc_core;
@@ -44,6 +67,7 @@ Suite *trie_suite(void) {
 
     tcase_add_test(tc_core, test_trie_new);
     tcase_add_test(tc_core, test_trie_insert);
+    tcase_add_test(tc_core, test_trie_delete);
 
     suite_add_tcase(suite, tc_core);
 
