@@ -12,8 +12,8 @@ START_TEST(test_max_heap_new) {
 
     ck_assert_ptr_ne(h, NULL);
 
-    //    max_heap_free(&h);
-    // ck_assert_ptr_eq(h, NULL);
+    max_heap_free(&h);
+    ck_assert_ptr_eq(h, NULL);
 }
 END_TEST
 
@@ -63,6 +63,8 @@ START_TEST(test_max_heap_insert) {
 
     max_heap_insert(h, 2);
     ck_assert_int_eq(max_heap_bottom(h), 2);
+
+    max_heap_free(&h);
 }
 END_TEST
 
@@ -97,6 +99,8 @@ START_TEST(test_max_heap_delete) {
     ck_assert_int_eq(popped, 20);
     ck_assert_int_eq(max_heap_top(h), 10);
     ck_assert_int_eq(max_heap_bottom(h), 2);
+
+    max_heap_free(&h);
 }
 END_TEST
 

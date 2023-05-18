@@ -127,3 +127,9 @@ int max_heap_delete(MaxHeap *h) {
 
     return popped;
 }
+
+void max_heap_free(MaxHeap **h) {
+    ABORT_IF_NULL(h);
+    free(*h);
+    *h = NULL;
+}

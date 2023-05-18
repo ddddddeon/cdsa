@@ -12,8 +12,8 @@ START_TEST(test_trie_new) {
 
     ck_assert_ptr_ne(t, NULL);
 
-    //    trie_free(&h);
-    // ck_assert_ptr_eq(h, NULL);
+    trie_free(&t);
+    ck_assert_ptr_eq(t, NULL);
 }
 END_TEST
 
@@ -24,7 +24,6 @@ START_TEST(test_trie_insert) {
     trie_insert(t, "chris");
     trie_insert(t, "cool");
     trie_insert(t, "cooler");
-    trie_print(t);
 
     ck_assert(trie_search(t, "chris"));
     ck_assert(trie_search(t, "cool"));
@@ -32,8 +31,7 @@ START_TEST(test_trie_insert) {
     ck_assert(!trie_search(t, "coolest"));
     ck_assert(!trie_search(t, "coo"));
 
-    //    trie_free(&h);
-    // ck_assert_ptr_eq(h, NULL);
+    trie_free(&t);
 }
 END_TEST
 

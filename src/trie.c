@@ -8,7 +8,7 @@
 
 struct Trie {
     struct Trie *children[ALPHABET_SIZE];
-    bool is_end;
+    const char *word;
 };
 
 typedef struct Trie Trie;
@@ -18,7 +18,7 @@ Trie *trie_new() {
     for (int i = 0; i < ALPHABET_SIZE; i++) {
         p->children[i] = NULL;
     }
-    p->is_end = false;
+    p->word = NULL;
     return p;
 }
 
@@ -31,29 +31,13 @@ int word_len(const char *word) {
     return len;
 }
 
-void left_pad(int n) {
-    for (int i = 0; i < n; i++) {
-        if (i == n - 1) {
-            printf("└");
-        } else {
-            printf(" ");
-        }
-    }
-}
-
 void trie_print(Trie *t) {
-    int pad = 0;
-
     for (int i = 0; i < ALPHABET_SIZE; i++) {
-        left_pad(pad);
-        pad = 0;
         if (t->children[i] != NULL) {
-            printf("%c", i + 'a');
             trie_print(t->children[i]);
 
-            if (t->is_end) {
-                printf("\n");
-                pad++;
+            if (t->word != NULL) {
+                printf("%s\n", t->word);
             }
         }
     }
@@ -77,10 +61,11 @@ void trie_insert(Trie *t, const char *word) {
         curr = curr->children[idx];
     }
 
-    prev->is_end = true;
+    prev->word = word;
 }
 
 bool trie_search(Trie *t, const char *word) {
+    ABORT_IF_NULL(t);
     Trie *curr = t;
     int len = word_len(word);
 
@@ -90,11 +75,23 @@ bool trie_search(Trie *t, const char *word) {
             return false;
         }
 
-        if (i == len - 1 && !curr->is_end) {
+        if (i == len - 1 && curr->word == NULL) {
             return false;
         }
 
         curr = curr->children[idx];
     }
     return true;
+}
+
+void trie_free(Trie **t) {
+    ABORT_IF_NULL(*t);
+
+    for (int i = 0; i < ALPHABET_SIZE; i++) {
+        if ((*t)->children[i] != NULL) {
+            trie_free(&(*t)->children[i]);
+        }
+    }
+    free(*t);
+    *t = NULL;
 }
