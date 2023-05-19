@@ -3,6 +3,7 @@
 
 #include <check.h>
 
+#include "../src/queue.h"
 #include "../src/trie.h"
 #include "test.h"
 
@@ -58,6 +59,38 @@ START_TEST(test_trie_delete) {
 }
 END_TEST
 
+START_TEST(test_trie_autocomplete) {
+    TEST_INFO;
+    Trie *t = trie_new();
+
+    trie_insert(t, "chris");
+    trie_insert(t, "cool");
+    trie_insert(t, "cooler");
+
+    Queue *q = trie_autocomplete(t, "coo");
+    ck_assert_int_eq(queue_size(q), 2);
+
+    const char *word1 = (const char *)queue_dequeue(q);
+    const char *word2 = (const char *)queue_dequeue(q);
+
+    ck_assert_str_eq(word1, "cooler");
+    ck_assert_str_eq(word2, "cool");
+
+    Queue *q2 = trie_autocomplete(t, "c");
+    ck_assert_int_eq(queue_size(q2), 3);
+
+    const char *word4 = (const char *)queue_dequeue(q2);
+    const char *word5 = (const char *)queue_dequeue(q2);
+    const char *word6 = (const char *)queue_dequeue(q2);
+
+    ck_assert_str_eq(word4, "chris");
+    ck_assert_str_eq(word5, "cooler");
+    ck_assert_str_eq(word6, "cool");
+
+    trie_free(&t);
+}
+END_TEST
+
 Suite *trie_suite(void) {
     Suite *suite;
     TCase *tc_core;
@@ -68,6 +101,7 @@ Suite *trie_suite(void) {
     tcase_add_test(tc_core, test_trie_new);
     tcase_add_test(tc_core, test_trie_insert);
     tcase_add_test(tc_core, test_trie_delete);
+    tcase_add_test(tc_core, test_trie_autocomplete);
 
     suite_add_tcase(suite, tc_core);
 
