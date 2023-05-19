@@ -65,6 +65,27 @@ void trie_insert(Trie *t, const char *word) {
     prev->word = word;
 }
 
+void trie_delete(Trie *t, const char *word) {
+    ABORT_IF_NULL(t);
+
+    Trie *curr = t;
+    Trie *prev = NULL;
+    int len = word_len(word);
+
+    for (int i = 0; i < len; i++) {
+        int idx = word[i] - 'a';
+
+        if (curr->children[idx] == NULL) {
+            return;
+        }
+
+        prev = curr;
+        curr = curr->children[idx];
+    }
+
+    prev->word = NULL;
+}
+
 bool trie_search(Trie *t, const char *word) {
     ABORT_IF_NULL(t);
     Trie *curr = t;
@@ -85,7 +106,7 @@ bool trie_search(Trie *t, const char *word) {
     return true;
 }
 
-Trie *trie_seek(Trie *t, const char *word) {
+Trie *seek(Trie *t, const char *word) {
     ABORT_IF_NULL(t);
     Trie *curr = t;
     int len = word_len(word);
@@ -114,9 +135,8 @@ void autocomplete(Trie *t, Queue *q) {
 
 Queue *trie_autocomplete(Trie *t, const char *word) {
     Queue *q = queue_new();
-    Trie *curr = trie_seek(t, word);
+    Trie *curr = seek(t, word);
     autocomplete(curr, q);
-
     return q;
 }
 
@@ -130,25 +150,4 @@ void trie_free(Trie **t) {
     }
     free(*t);
     *t = NULL;
-}
-
-void trie_delete(Trie *t, const char *word) {
-    ABORT_IF_NULL(t);
-
-    Trie *curr = t;
-    Trie *prev = NULL;
-    int len = word_len(word);
-
-    for (int i = 0; i < len; i++) {
-        int idx = word[i] - 'a';
-
-        if (curr->children[idx] == NULL) {
-            return;
-        }
-
-        prev = curr;
-        curr = curr->children[idx];
-    }
-
-    prev->word = NULL;
 }
