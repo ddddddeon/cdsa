@@ -95,7 +95,7 @@ Suite *trie_suite(void) {
     Suite *suite;
     TCase *tc_core;
 
-    suite = suite_create("Max Heap");
+    suite = suite_create("Trie");
     tc_core = tcase_create("Core");
 
     tcase_add_test(tc_core, test_trie_new);
