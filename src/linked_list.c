@@ -5,7 +5,7 @@
 #include "common.h"
 
 struct LinkedListNode {
-    int value;
+    void *value;
     struct LinkedListNode *next;
     struct LinkedListNode *prev;
 };
@@ -26,17 +26,17 @@ LinkedList *linked_list_new() {
     return p;
 }
 
-LinkedListNode *linked_list_node_new(int n) {
+LinkedListNode *linked_list_node_new(void *value) {
     LinkedListNode *p = malloc(sizeof(LinkedListNode));
-    p->value = n;
+    p->value = value;
     p->next = NULL;
     p->prev = NULL;
     return p;
 }
 
 int linked_list_size(LinkedList *ll) { return ll->size; }
-int linked_list_first(LinkedList *ll) { return ll->first->value; }
-int linked_list_last(LinkedList *ll) { return ll->last->value; }
+void *linked_list_first(LinkedList *ll) { return ll->first->value; }
+void *linked_list_last(LinkedList *ll) { return ll->last->value; }
 
 void linked_list_print(LinkedList *ll) {
     ABORT_IF_NULL(ll);
@@ -45,18 +45,19 @@ void linked_list_print(LinkedList *ll) {
         return;
     }
 
+    // will only work for strings
     printf("[ ");
     while (curr != NULL) {
-        printf("%d ", curr->value);
+        printf("%s ", (const char *)curr->value);
         curr = curr->next;
     }
 
     printf("]\n");
 }
 
-void linked_list_insert_beginning(LinkedList *ll, int n) {
+void linked_list_insert_beginning(LinkedList *ll, void *value) {
     ABORT_IF_NULL(ll);
-    LinkedListNode *new = linked_list_node_new(n);
+    LinkedListNode *new = linked_list_node_new(value);
 
     if (ll->size == 0) {
         ll->last = new;
@@ -72,9 +73,9 @@ void linked_list_insert_beginning(LinkedList *ll, int n) {
     ll->size++;
 }
 
-void linked_list_insert_end(LinkedList *ll, int n) {
+void linked_list_insert_end(LinkedList *ll, void *value) {
     ABORT_IF_NULL(ll);
-    LinkedListNode *new = linked_list_node_new(n);
+    LinkedListNode *new = linked_list_node_new(value);
 
     if (ll->size == 0) {
         ll->last = new;
@@ -89,19 +90,19 @@ void linked_list_insert_end(LinkedList *ll, int n) {
     ll->size++;
 }
 
-void linked_list_insert_at(LinkedList *ll, int n, int idx) {
+void linked_list_insert_at(LinkedList *ll, void *value, int idx) {
     ABORT_IF_NULL(ll);
     if (idx < 0 || idx > ll->size) {
         return;
     }
 
     if (idx == 0) {
-        linked_list_insert_beginning(ll, n);
+        linked_list_insert_beginning(ll, value);
         return;
     }
 
     if (idx == ll->size) {
-        linked_list_insert_end(ll, n);
+        linked_list_insert_end(ll, value);
         return;
     }
 
@@ -111,7 +112,7 @@ void linked_list_insert_at(LinkedList *ll, int n, int idx) {
     }
 
     LinkedListNode *prev = curr->prev;
-    LinkedListNode *new = linked_list_node_new(n);
+    LinkedListNode *new = linked_list_node_new(value);
     new->prev = prev;
     new->next = curr;
     prev->next = new;
@@ -119,7 +120,7 @@ void linked_list_insert_at(LinkedList *ll, int n, int idx) {
     ll->size++;
 }
 
-void linked_list_update_at(LinkedList *ll, int n, int idx) {
+void linked_list_update_at(LinkedList *ll, void *value, int idx) {
     ABORT_IF_NULL(ll);
     if (idx < 0 || idx >= ll->size) {
         return;
@@ -129,12 +130,12 @@ void linked_list_update_at(LinkedList *ll, int n, int idx) {
     for (int i = 0; i < idx; i++) {
         curr = curr->next;
     }
-    curr->value = n;
+    curr->value = value;
 }
 
-void linked_list_delete(LinkedList *ll, int n) {
+void linked_list_delete(LinkedList *ll, void *value) {
     ABORT_IF_NULL(ll);
-    if (ll->first->value == n) {
+    if (ll->first->value == value) {
         LinkedListNode *new = ll->first->next;
         LinkedListNode *old_first = ll->first;
         free(old_first);
@@ -144,7 +145,7 @@ void linked_list_delete(LinkedList *ll, int n) {
         return;
     }
 
-    if (ll->last->value == n) {
+    if (ll->last->value == value) {
         LinkedListNode *tmp = ll->last;
         ll->last->prev->next = NULL;
         ll->last = ll->last->prev;
@@ -155,7 +156,7 @@ void linked_list_delete(LinkedList *ll, int n) {
 
     LinkedListNode *curr = ll->first;
     while (curr->next != NULL) {
-        if (curr->next->value == n) {
+        if (curr->next->value == value) {
             LinkedListNode *tmp = curr->next;
             curr->next = curr->next->next;
             curr->next->prev = curr;

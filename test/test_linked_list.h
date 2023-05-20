@@ -21,73 +21,102 @@ END_TEST
 START_TEST(test_linked_list_insert_end) {
     TEST_INFO;
     LinkedList *l = linked_list_new();
-    linked_list_insert_end(l, 0);
-    linked_list_insert_end(l, 1);
+
+    const char *first = "first";
+    const char *second = "second";
+
+    linked_list_insert_end(l, (void *)first);
+    linked_list_insert_end(l, (void *)second);
 
     ck_assert_int_eq(linked_list_size(l), 2);
-    ck_assert_int_eq(linked_list_last(l), 1);
-    ck_assert_int_eq(linked_list_first(l), 0);
+    ck_assert_ptr_eq(linked_list_last(l), second);
+    ck_assert_ptr_eq(linked_list_first(l), first);
 }
 END_TEST
 
 START_TEST(test_linked_list_insert_beginning) {
     TEST_INFO;
     LinkedList *l = linked_list_new();
-    linked_list_insert_beginning(l, 0);
-    linked_list_insert_beginning(l, 1);
+
+    const char *first = "first";
+    const char *second = "second";
+
+    linked_list_insert_beginning(l, (void *)first);
+    linked_list_insert_beginning(l, (void *)second);
 
     ck_assert_int_eq(linked_list_size(l), 2);
-    ck_assert_int_eq(linked_list_last(l), 0);
-    ck_assert_int_eq(linked_list_first(l), 1);
+    ck_assert_ptr_eq(linked_list_last(l), first);
+    ck_assert_ptr_eq(linked_list_first(l), second);
 }
 END_TEST
 
 START_TEST(test_linked_list_insert_at) {
     TEST_INFO;
     LinkedList *l = linked_list_new();
-    linked_list_insert_end(l, 0);
-    linked_list_insert_end(l, 1);
-    linked_list_insert_end(l, 2);
-    linked_list_insert_at(l, 4, 0);
-    linked_list_insert_at(l, 5, 1);
-    linked_list_insert_at(l, 6, 5);
+
+    const char *first = "first";
+    const char *second = "second";
+    const char *third = "third";
+    const char *fourth = "fourth";
+    const char *fifth = "fifth";
+    const char *sixth = "sixth";
+
+    linked_list_insert_end(l, (void *)first);
+    linked_list_insert_end(l, (void *)second);
+    linked_list_insert_end(l, (void *)third);
+    linked_list_insert_at(l, (void *)fourth, 0);
+    linked_list_insert_at(l, (void *)fifth, 1);
+    linked_list_insert_at(l, (void *)sixth, 5);
 
     ck_assert_int_eq(linked_list_size(l), 6);
-    ck_assert_int_eq(linked_list_first(l), 4);
-    ck_assert_int_eq(linked_list_last(l), 6);
+    ck_assert_ptr_eq(linked_list_first(l), fourth);
+    ck_assert_ptr_eq(linked_list_last(l), sixth);
 }
 END_TEST
 
 START_TEST(test_linked_list_update_at) {
     TEST_INFO;
     LinkedList *l = linked_list_new();
-    linked_list_insert_end(l, 0);
-    linked_list_insert_end(l, 1);
-    linked_list_insert_end(l, 2);
 
-    linked_list_update_at(l, 4, 0);
-    linked_list_update_at(l, 5, 1);
-    linked_list_update_at(l, 6, 2);
+    const char *first = "first";
+    const char *second = "second";
+    const char *third = "third";
+    const char *fourth = "fourth";
+    const char *fifth = "fifth";
+    const char *sixth = "sixth";
+
+    linked_list_insert_end(l, (void *)first);
+    linked_list_insert_end(l, (void *)second);
+    linked_list_insert_end(l, (void *)third);
+
+    linked_list_update_at(l, (void *)fourth, 0);
+    linked_list_update_at(l, (void *)fifth, 1);
+    linked_list_update_at(l, (void *)sixth, 2);
 
     ck_assert_int_eq(linked_list_size(l), 3);
-    ck_assert_int_eq(linked_list_first(l), 4);
-    ck_assert_int_eq(linked_list_last(l), 6);
+    ck_assert_ptr_eq(linked_list_first(l), fourth);
+    ck_assert_ptr_eq(linked_list_last(l), sixth);
 }
 END_TEST
 
 START_TEST(test_linked_list_delete) {
     TEST_INFO;
     LinkedList *l = linked_list_new();
-    linked_list_insert_end(l, 0);
-    linked_list_insert_end(l, 1);
-    linked_list_insert_end(l, 2);
 
-    linked_list_delete(l, 2);
-    linked_list_delete(l, 0);
+    const char *first = "first";
+    const char *second = "second";
+    const char *third = "third";
+
+    linked_list_insert_end(l, (void *)first);
+    linked_list_insert_end(l, (void *)second);
+    linked_list_insert_end(l, (void *)third);
+
+    linked_list_delete(l, (void *)third);
+    linked_list_delete(l, (void *)first);
 
     ck_assert_int_eq(linked_list_size(l), 1);
-    ck_assert_int_eq(linked_list_first(l), 1);
-    ck_assert_int_eq(linked_list_last(l), 1);
+    ck_assert_ptr_eq(linked_list_first(l), second);
+    ck_assert_ptr_eq(linked_list_last(l), second);
 
     linked_list_free(&l);
 }
@@ -96,14 +125,19 @@ END_TEST
 START_TEST(test_linked_list_reverse) {
     TEST_INFO;
     LinkedList *l = linked_list_new();
-    linked_list_insert_end(l, 0);
-    linked_list_insert_end(l, 1);
-    linked_list_insert_end(l, 2);
+
+    const char *first = "first";
+    const char *second = "second";
+    const char *third = "third";
+
+    linked_list_insert_end(l, (void *)first);
+    linked_list_insert_end(l, (void *)second);
+    linked_list_insert_end(l, (void *)third);
 
     linked_list_reverse(l);
 
-    ck_assert_int_eq(linked_list_last(l), 0);
-    ck_assert_int_eq(linked_list_first(l), 2);
+    ck_assert_ptr_eq(linked_list_last(l), first);
+    ck_assert_ptr_eq(linked_list_first(l), third);
 
     linked_list_free(&l);
 }
