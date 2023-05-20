@@ -11,9 +11,13 @@ START_TEST(test_vertex_new) {
     TEST_INFO;
     Vertex *v = vertex_new("alice");
     Vertex *v2 = vertex_new("bob");
+    Vertex *v3 = vertex_new("cliff");
 
     vertex_connect(v, v2);
+    vertex_connect(v, v3);
     vertex_print(v);
+    vertex_print(v2);
+    vertex_print(v3);
 
     ck_assert_ptr_ne(v, NULL);
 

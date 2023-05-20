@@ -1,6 +1,8 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#include <stdlib.h>
+
 #define ABORT_IF_NULL(p)                                              \
     do {                                                              \
         if (p == NULL) {                                              \

@@ -7,6 +7,7 @@ LinkedList *linked_list_new();
 int linked_list_size(LinkedList *ll);
 void *linked_list_first(LinkedList *ll);
 void *linked_list_last(LinkedList *ll);
+void *linked_list_get(LinkedList *ll, int idx);
 void linked_list_insert_beginning(LinkedList *ll, void *value);
 void linked_list_insert_at(LinkedList *ll, void *value, int idx);
 void linked_list_update_at(LinkedList *ll, void *, int idx);

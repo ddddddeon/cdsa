@@ -38,6 +38,20 @@ int linked_list_size(LinkedList *ll) { return ll->size; }
 void *linked_list_first(LinkedList *ll) { return ll->first->value; }
 void *linked_list_last(LinkedList *ll) { return ll->last->value; }
 
+void *linked_list_get(LinkedList *ll, int idx) {
+    ABORT_IF_NULL(ll);
+    if (idx < 0 || idx >= ll->size) {
+        return NULL;
+    }
+
+    LinkedListNode *curr = ll->first;
+    for (int i = 0; i < idx; i++) {
+        curr = curr->next;
+    }
+
+    return curr->value;
+}
+
 void linked_list_print(LinkedList *ll) {
     ABORT_IF_NULL(ll);
     LinkedListNode *curr = ll->first;

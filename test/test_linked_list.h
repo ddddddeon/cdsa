@@ -71,6 +71,8 @@ START_TEST(test_linked_list_insert_at) {
     ck_assert_int_eq(linked_list_size(l), 6);
     ck_assert_ptr_eq(linked_list_first(l), fourth);
     ck_assert_ptr_eq(linked_list_last(l), sixth);
+    ck_assert_ptr_eq(linked_list_get(l, 0), fourth);
+    ck_assert_ptr_eq(linked_list_get(l, 5), sixth);
 }
 END_TEST
 
