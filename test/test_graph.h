@@ -12,19 +12,24 @@ START_TEST(test_vertex_new) {
     Vertex *v = vertex_new("alice");
     Vertex *v2 = vertex_new("bob");
     Vertex *v3 = vertex_new("cliff");
+    Vertex *v4 = vertex_new("out");
+    Vertex *v5 = vertex_new("way out");
 
     vertex_connect(v, v2);
-    vertex_connect(v, v3);
+    vertex_connect(v2, v3);
+    vertex_connect(v3, v4);
+    vertex_connect(v, v5);
+
     vertex_print(v);
     vertex_print(v2);
     vertex_print(v3);
 
     vertex_dfs_print(v);
+    printf("*********\n");
+    vertex_bfs_print(v);
 
-    ck_assert_ptr_ne(v, NULL);
-
-    // vertex_free(&v);
-    // ck_assert_ptr_eq(v, NULL);
+    vertex_free(&v);
+    ck_assert_ptr_eq(v, NULL);
 }
 END_TEST
 
