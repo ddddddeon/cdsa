@@ -15,10 +15,10 @@ START_TEST(test_vertex_new) {
     Vertex *v4 = vertex_new("out");
     Vertex *v5 = vertex_new("way out");
 
-    vertex_connect(v, v2);
-    vertex_connect(v2, v3);
-    vertex_connect(v3, v4);
-    vertex_connect(v, v5);
+    vertex_connect(v, v2, 100);
+    vertex_connect(v2, v3, 200);
+    vertex_connect(v3, v4, 100);
+    vertex_connect(v, v5, 300);
 
     vertex_print(v);
     vertex_print(v2);

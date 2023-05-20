@@ -44,6 +44,29 @@ START_TEST(test_hash_map_set_get) {
 }
 END_TEST
 
+START_TEST(test_hash_map_to_queue) {
+    TEST_INFO;
+    HashMap *h = hash_map_new();
+
+    const char *expected = "cool";
+    hash_map_set(h, "chris", (void *)expected);
+
+    const char *new_expected = "very cool";
+    hash_map_set(h, "chris2", (void *)new_expected);
+
+    Queue *q = hash_map_to_queue(h);
+
+    ck_assert_int_eq(queue_size(q), 2);
+
+    while (queue_size(q) > 0) {
+        const char *value = (const char *)queue_dequeue(q);
+        printf("%s\n", value);
+    }
+
+    hash_map_free(&h);
+}
+END_TEST
+
 Suite *hash_map_suite(void) {
     Suite *suite;
     TCase *tc_core;
@@ -53,6 +76,7 @@ Suite *hash_map_suite(void) {
 
     tcase_add_test(tc_core, test_hash_map_new);
     tcase_add_test(tc_core, test_hash_map_set_get);
+    tcase_add_test(tc_core, test_hash_map_to_queue);
 
     suite_add_tcase(suite, tc_core);
 
