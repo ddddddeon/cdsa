@@ -44,10 +44,8 @@ int compute_hash(const char *key) {
         if (i >= MAX_KEY_SIZE) {
             return -1;
         }
-
         hash += (key[i] - 'a') * (i + 1);
     }
-
     return hash;
 }
 

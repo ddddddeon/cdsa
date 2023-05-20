@@ -19,6 +19,8 @@ START_TEST(test_vertex_new) {
     vertex_print(v2);
     vertex_print(v3);
 
+    vertex_dfs_print(v);
+
     ck_assert_ptr_ne(v, NULL);
 
     // vertex_free(&v);
