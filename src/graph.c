@@ -11,6 +11,7 @@
 struct Vertex {
     const char *value;
     int n_edges;
+    // for weighted graph, use hash map with key = name, value = weight
     LinkedList *adjacent_vertices;
 };
 
@@ -73,8 +74,8 @@ void vertex_bfs_print(Vertex *v) {
     ABORT_IF_NULL(v);
     HashMap *seen = hash_map_new();
     Queue *q = queue_new();
-    const char *seen_value = "seen";
 
+    const char *seen_value = "seen";
     hash_map_set(seen, v->value, (void *)seen_value);
     queue_enqueue(q, v);
 
@@ -117,6 +118,5 @@ void vertex_dfs_free(Vertex **v, HashMap *seen) {
 void vertex_free(Vertex **v) {
     ABORT_IF_NULL(v);
     HashMap *seen = hash_map_new();
-
     vertex_dfs_free(v, seen);
 }
