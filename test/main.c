@@ -3,6 +3,7 @@
 
 #include "test_array.h"
 #include "test_binary_tree.h"
+#include "test_graph.h"
 #include "test_linked_list.h"
 #include "test_max_heap.h"
 #include "test_ordered_set.h"
@@ -22,6 +23,7 @@ int main(int argc, char* argv[]) {
     Suite* binary_tree_tests = binary_tree_suite();
     Suite* max_heap_tests = max_heap_suite();
     Suite* trie_tests = trie_suite();
+    Suite* graph_tests = graph_suite();
 
     runner = srunner_create(array_tests);
     srunner_add_suite(runner, linked_list_tests);
@@ -31,6 +33,7 @@ int main(int argc, char* argv[]) {
     srunner_add_suite(runner, binary_tree_tests);
     srunner_add_suite(runner, max_heap_tests);
     srunner_add_suite(runner, trie_tests);
+    srunner_add_suite(runner, graph_tests);
 
     srunner_run_all(runner, CK_NORMAL);
     number_failed = srunner_ntests_failed(runner);
