@@ -26,6 +26,9 @@ HashMap *hash_map_new() {
     return p;
 }
 
+int hash_map_size(HashMap *h) { return h->size; }
+int hash_map_cap(HashMap *h) { return h->cap; }
+
 void hash_map_resize_data(HashMap **h) {
     ABORT_IF_NULL(*h);
     HashMap *new = malloc(sizeof(HashMap) + sizeof(Entry *) * (*h)->cap * 2);
@@ -73,6 +76,7 @@ void hash_map_set(HashMap *h, const char *key, void *value) {
             entry->key = key;
             entry->value = value;
             *(h->data + idx) = entry;
+            h->size++;
             return;
         } else {
             if (strcmp(h->data[idx]->key, key) == 0) {

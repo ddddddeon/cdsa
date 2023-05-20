@@ -11,9 +11,11 @@ START_TEST(test_hash_map_new) {
     HashMap *h = hash_map_new();
 
     ck_assert_ptr_ne(h, NULL);
+    ck_assert_int_eq(hash_map_size(h), 0);
+    ck_assert_int_eq(hash_map_cap(h), 1024);
 
-    //    hash_map_free(&h);
-    //    ck_assert_ptr_eq(h, NULL);
+    hash_map_free(&h);
+    ck_assert_ptr_eq(h, NULL);
 }
 END_TEST
 
@@ -38,7 +40,7 @@ START_TEST(test_hash_map_set_get) {
     const char *new_value = (const char *)hash_map_get(h, "chris");
     ck_assert_str_eq(new_value, new_expected);
 
-    //    hash_map_free(&h);
+    hash_map_free(&h);
 }
 END_TEST
 
