@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "common.h"
+#include "queue.h"
 
 #define INITIAL_CAP 1024
 #define MAX_KEY_SIZE 1024
@@ -47,7 +48,7 @@ int compute_hash(const char *key) {
         if (i >= MAX_KEY_SIZE) {
             return -1;
         }
-        hash += (key[i] - 'a') * (i + 1);
+        hash += (key[i] - '0') * (i + 1);
     }
     return hash;
 }
@@ -110,4 +111,15 @@ void hash_map_free(HashMap **h) {
     }
     free(*h);
     *h = NULL;
+}
+
+Queue *hash_map_to_queue(HashMap *h) {
+    Queue *q = queue_new();
+    for (int i = 0; i < h->cap; i++) {
+        if (h->data[i] != NULL) {
+            queue_enqueue(q, h->data[i]->value);
+        }
+    }
+
+    return q;
 }
