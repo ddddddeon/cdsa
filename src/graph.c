@@ -52,7 +52,6 @@ void vertex_print(Vertex *v) {
     printf("%s -> [ ", v->value);
 
     Queue *q = hash_map_to_queue(v->adjacent_vertices);
-
     while (queue_size(q) > 0) {
         Edge *edge = (Edge *)queue_dequeue(q);
         Vertex *vertex = edge->vertex;
@@ -75,7 +74,6 @@ void vertex_dfs_traverse(Vertex *v, HashMap *seen) {
     printf("%s\n", v->value);
 
     Queue *q = hash_map_to_queue(v->adjacent_vertices);
-
     while (queue_size(q) > 0) {
         Edge *edge = (Edge *)queue_dequeue(q);
         Vertex *vertex = edge->vertex;
@@ -103,7 +101,6 @@ void vertex_bfs_print(Vertex *v) {
         printf("%s\n", curr->value);
 
         Queue *items = hash_map_to_queue(curr->adjacent_vertices);
-
         while (queue_size(items) > 0) {
             Edge *edge = (Edge *)queue_dequeue(items);
             Vertex *vertex = edge->vertex;
@@ -127,7 +124,6 @@ void vertex_dfs_free(Vertex **v, HashMap *seen) {
     hash_map_set(seen, (*v)->value, (void *)seen_value);
 
     Queue *q = hash_map_to_queue((*v)->adjacent_vertices);
-
     while (queue_size(q) > 0) {
         Edge *edge = (Edge *)queue_dequeue(q);
         Vertex *vertex = edge->vertex;
