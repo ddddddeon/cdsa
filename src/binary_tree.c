@@ -120,6 +120,43 @@ bool binary_tree_search(BinaryTree *t, int value) {
     return false;
 }
 
+int binary_tree_shortest_path(BinaryTree *t, int end) {
+    ABORT_IF_NULL(t);
+
+    if (t->value == end) {
+        return 0;
+    }
+
+    int level = 0;
+    Queue *q = queue_new();
+
+    queue_enqueue(q, t);
+
+    while (queue_size(q) > 0) {
+        int size = queue_size(q);
+        for (int i = 0; i < size; i++) {
+            BinaryTree *node = (BinaryTree *)queue_dequeue(q);
+            if (binary_tree_value(node) == end) {
+                queue_free(&q);
+                return level;
+            }
+
+            if (binary_tree_left(node) != NULL) {
+                queue_enqueue(q, binary_tree_left(node));
+            }
+
+            if (binary_tree_right(node) != NULL) {
+                queue_enqueue(q, binary_tree_right(node));
+            }
+        }
+
+        level++;
+    }
+
+    queue_free(&q);
+    return -1;
+}
+
 void binary_tree_df_print_pre_order(BinaryTree *t) {
     if (t == NULL) {
         return;

@@ -35,8 +35,8 @@ int main(int argc, char* argv[]) {
     srunner_add_suite(runner, binary_tree_tests);
     srunner_add_suite(runner, max_heap_tests);
     srunner_add_suite(runner, trie_tests);
-    srunner_add_suite(runner, graph_tests);
     srunner_add_suite(runner, hash_map_tests);
+    srunner_add_suite(runner, graph_tests);
 
     srunner_run_all(runner, CK_NORMAL);
     number_failed = srunner_ntests_failed(runner);

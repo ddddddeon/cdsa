@@ -87,6 +87,36 @@ START_TEST(test_binary_tree_search) {
 }
 END_TEST
 
+START_TEST(test_binary_tree_shortest_path) {
+    TEST_INFO;
+    BinaryTree *t = binary_tree_new(10);
+    binary_tree_insert(t, 3);
+    binary_tree_insert(t, 12);
+    binary_tree_insert(t, 15);
+    binary_tree_insert(t, 20);
+    binary_tree_insert(t, 2);
+
+    /*        10
+            3    12
+          2        15
+                     20
+    */
+
+    int levels1 = binary_tree_shortest_path(t, 20);
+    int levels2 = binary_tree_shortest_path(t, 2);
+    int levels3 = binary_tree_shortest_path(t, 12);
+    int levels4 = binary_tree_shortest_path(t, 10);
+
+    ck_assert_int_eq(levels1, 3);
+    ck_assert_int_eq(levels2, 2);
+    ck_assert_int_eq(levels3, 1);
+    ck_assert_int_eq(levels4, 0);
+
+    binary_tree_free(&t);
+    ck_assert_ptr_eq(t, NULL);
+}
+END_TEST
+
 Suite *binary_tree_suite(void) {
     Suite *suite;
     TCase *tc_core;
@@ -98,6 +128,7 @@ Suite *binary_tree_suite(void) {
     tcase_add_test(tc_core, test_binary_tree_insert);
     tcase_add_test(tc_core, test_binary_tree_delete);
     tcase_add_test(tc_core, test_binary_tree_search);
+    tcase_add_test(tc_core, test_binary_tree_shortest_path);
 
     suite_add_tcase(suite, tc_core);
 
