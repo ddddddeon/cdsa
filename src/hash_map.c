@@ -120,6 +120,5 @@ Queue *hash_map_to_queue(HashMap *h) {
             queue_enqueue(q, h->data[i]->value);
         }
     }
-
     return q;
 }

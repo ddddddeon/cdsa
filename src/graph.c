@@ -41,8 +41,8 @@ void vertex_connect(Vertex *v1, Vertex *v2, int weight) {
 
     Edge *edge_forward = edge_new(v2, weight);
     Edge *edge_back = edge_new(v1, weight);
-    // undirected graph; connections go both ways
 
+    // undirected graph; connections go both ways
     hash_map_set(v1->adjacent_vertices, v2->value, edge_forward);
     hash_map_set(v2->adjacent_vertices, v1->value, edge_back);
 }
