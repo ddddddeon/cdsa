@@ -9,5 +9,6 @@ void vertex_print(Vertex *v);
 void vertex_dfs_print(Vertex *v);
 void vertex_bfs_print(Vertex *v);
 void vertex_free(Vertex **v);
+void dijkstra(Vertex *v, Vertex *dest);
 
 #endif /* !GRAPH_H */

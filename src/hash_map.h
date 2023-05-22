@@ -10,7 +10,10 @@ int hash_map_size(HashMap *h);
 int hash_map_cap(HashMap *h);
 void hash_map_set(HashMap *h, const char *key, void *value);
 void *hash_map_get(HashMap *h, const char *key);
+void hash_map_delete(HashMap **h, const char *key);
 void hash_map_free(HashMap **h);
 Queue *hash_map_to_queue(HashMap *h);
-
+void hash_map_print_string(HashMap *h);
+void hash_map_print_int(HashMap *h);
+void hash_map_print_ptr(HashMap *h);
 #endif /* !HASH_MAP_H */

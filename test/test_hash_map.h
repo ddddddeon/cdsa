@@ -44,6 +44,22 @@ START_TEST(test_hash_map_set_get) {
 }
 END_TEST
 
+START_TEST(test_hash_map_delete) {
+    TEST_INFO;
+    HashMap *h = hash_map_new();
+
+    const char *expected = "cool";
+    hash_map_set(h, "chris", (void *)expected);
+
+    const char *value = (const char *)hash_map_get(h, "chris");
+
+    hash_map_delete(&h, "chris");
+    ck_assert_ptr_eq(hash_map_get(h, "chris"), NULL);
+
+    hash_map_free(&h);
+}
+END_TEST
+
 START_TEST(test_hash_map_to_queue) {
     TEST_INFO;
     HashMap *h = hash_map_new();

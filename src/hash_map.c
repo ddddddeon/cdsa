@@ -102,6 +102,17 @@ void *hash_map_get(HashMap *h, const char *key) {
     return NULL;
 }
 
+void hash_map_delete(HashMap **h, const char *key) {
+    ABORT_IF_NULL(*h);
+    int hash = compute_hash(key);
+    int idx = hash % (*h)->cap;
+
+    if ((*h)->data[idx] != NULL) {
+        free((*h)->data[idx]);
+        (*h)->data[idx] = NULL;
+    }
+}
+
 void hash_map_free(HashMap **h) {
     for (int i = 0; i < (*h)->size; i++) {
         if ((*h)->data[i] != NULL) {
@@ -121,4 +132,32 @@ Queue *hash_map_to_queue(HashMap *h) {
         }
     }
     return q;
+}
+
+void hash_map_print_string(HashMap *h) {
+    for (int i = 0; i < h->cap; i++) {
+        if (h->data[i] != NULL) {
+            // only works for strings
+            printf("%s: %s\n", h->data[i]->key,
+                   (const char *)h->data[i]->value);
+        }
+    }
+}
+
+void hash_map_print_int(HashMap *h) {
+    for (int i = 0; i < h->cap; i++) {
+        if (h->data[i] != NULL) {
+            // only works for ints
+            printf("%s: %d\n", h->data[i]->key, *(int *)h->data[i]->value);
+        }
+    }
+}
+
+void hash_map_print_ptr(HashMap *h) {
+    for (int i = 0; i < h->cap; i++) {
+        if (h->data[i] != NULL) {
+            // only works for pointers
+            printf("%s: %p\n", h->data[i]->key, h->data[i]->value);
+        }
+    }
 }
