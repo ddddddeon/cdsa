@@ -51,8 +51,6 @@ START_TEST(test_hash_map_delete) {
     const char *expected = "cool";
     hash_map_set(h, "chris", (void *)expected);
 
-    const char *value = (const char *)hash_map_get(h, "chris");
-
     hash_map_delete(&h, "chris");
     ck_assert_ptr_eq(hash_map_get(h, "chris"), NULL);
 
@@ -93,6 +91,7 @@ Suite *hash_map_suite(void) {
     tcase_add_test(tc_core, test_hash_map_new);
     tcase_add_test(tc_core, test_hash_map_set_get);
     tcase_add_test(tc_core, test_hash_map_to_queue);
+    tcase_add_test(tc_core, test_hash_map_delete);
 
     suite_add_tcase(suite, tc_core);
 

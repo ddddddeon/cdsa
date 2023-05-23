@@ -30,9 +30,7 @@ START_TEST(test_array_get_insert) {
     array_insert(a, 2);
     array_insert(a, 3);
     array_insert(a, 1);
-    int ret = array_insert(a, 2);
 
-    ck_assert_int_eq(ret, -1);
     ck_assert_int_eq(array_size(a), 10);
     ck_assert_int_eq(array_get(a, 0), 1);
     ck_assert_int_eq(array_get(a, 1), 2);
@@ -57,14 +55,40 @@ START_TEST(test_array_insert_at) {
     array_insert(a, 1);
     array_insert(a, 3);
     array_insert_at(a, 2, 1);
-    int ret = array_insert_at(a, 4, 2);
 
-    ck_assert_int_eq(ret, -1);
     ck_assert_int_eq(array_size(a), 3);
     ck_assert_int_eq(array_get(a, 1), 2);
     ck_assert_int_eq(array_get(a, 2), 3);
 
     array_free(&a);
+}
+END_TEST
+
+START_TEST(test_array_expand) {
+    TEST_INFO;
+    Array* a = array_new(10);
+    array_insert(a, 8);
+    array_insert(a, 5);
+
+    ck_assert_int_eq(array_cap(a), 10);
+    array_expand(a);
+    ck_assert_int_eq(array_get(a, 10), 0);
+    ck_assert_int_eq(array_cap(a), 20);
+
+    array_free(&a);
+
+    Array* b = array_new(2);
+    array_insert(b, 8);
+    array_insert(b, 5);
+    array_insert(b, 8);
+    array_insert(b, 5);
+
+    ck_assert_int_eq(array_cap(b), 4);
+    ck_assert_int_eq(array_size(b), 4);
+
+    array_insert(b, 4);
+    ck_assert_int_eq(array_cap(b), 8);
+    ck_assert_int_eq(array_size(b), 5);
 }
 END_TEST
 
@@ -290,6 +314,7 @@ Suite* array_suite(void) {
     tcase_add_test(tc_core, test_array_new);
     tcase_add_test(tc_core, test_array_get_insert);
     tcase_add_test(tc_core, test_array_insert_at);
+    tcase_add_test(tc_core, test_array_expand);
     tcase_add_test(tc_core, test_array_avail);
     tcase_add_test(tc_core, test_array_delete_at);
     tcase_add_test(tc_core, test_array_update_at);

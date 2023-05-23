@@ -10,13 +10,14 @@
 typedef struct {
     size_t size;
     size_t cap;
-    int data[];
+    int *data;
 } Array;
 
 Array *array_new(size_t len) {
-    Array *p = malloc(sizeof(Array) + len * sizeof(int));
+    Array *p = malloc(sizeof(Array));
     p->cap = len;
     p->size = 0;
+    p->data = malloc(len * sizeof(int));
     return p;
 }
 
@@ -43,6 +44,13 @@ size_t array_cap(Array *c) {
     return c->cap;
 }
 
+void array_expand(Array *c) {
+    ABORT_IF_NULL(c);
+    int *data = (int *)realloc(c->data, (c->cap * 2) * sizeof(int));
+    c->data = data;
+    c->cap *= 2;
+}
+
 void array_print(Array *c) {
     ABORT_IF_NULL(c);
     printf("[ ");
@@ -60,7 +68,7 @@ int array_avail(Array *c) {
 int array_insert(Array *c, int n) {
     ABORT_IF_NULL(c);
     if (array_avail(c) <= 0) {
-        return -1;
+        array_expand(c);
     }
 
     int idx = c->size;
@@ -71,7 +79,11 @@ int array_insert(Array *c, int n) {
 
 int array_insert_at(Array *c, int n, int i) {
     ABORT_IF_NULL(c);
-    if (c->cap - c->size < 1 || i >= c->cap || i < 0) {
+    if (c->cap - c->size < 1) {
+        array_expand(c);
+    }
+
+    if (i >= c->cap || i < 0) {
         return -1;
     }
 

@@ -11,6 +11,7 @@ Array *array_copy(Array *c);
 void array_free(Array **c);
 size_t array_size(Array *c);
 size_t array_cap(Array *c);
+void array_expand(Array *c);
 void array_print(Array *c);
 int array_avail(Array *c);
 int array_get(Array *c, int i);

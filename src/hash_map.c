@@ -16,13 +16,14 @@ typedef struct {
 typedef struct {
     int cap;
     int size;
-    Entry *data[];
+    Entry **data;
 } HashMap;
 
 HashMap *hash_map_new() {
-    HashMap *p = malloc(sizeof(HashMap) + sizeof(Entry *) * INITIAL_CAP);
+    HashMap *p = malloc(sizeof(HashMap));
     p->cap = INITIAL_CAP;
     p->size = 0;
+    p->data = malloc(sizeof(Entry *) * INITIAL_CAP);
     memset(p->data, 0, sizeof(Entry *) * INITIAL_CAP);
     return p;
 }
@@ -30,15 +31,11 @@ HashMap *hash_map_new() {
 int hash_map_size(HashMap *h) { return h->size; }
 int hash_map_cap(HashMap *h) { return h->cap; }
 
-void hash_map_resize_data(HashMap **h) {
-    ABORT_IF_NULL(*h);
-    HashMap *new = malloc(sizeof(HashMap) + sizeof(Entry *) * (*h)->cap * 2);
-    new->cap = (*h)->cap * 2;
-    new->size = (*h)->size;
-    memset(new->data, 0, sizeof(void *) * INITIAL_CAP);
-    memcpy(new->data, (*h)->data, new->cap * sizeof(Entry *));
-    free(*h);
-    *h = new;
+void hash_map_resize_data(HashMap *h) {
+    ABORT_IF_NULL(h);
+    Entry **data = realloc(h->data, sizeof(Entry *) * (h->cap * 2));
+    h->data = data;
+    h->cap *= 2;
 }
 
 int compute_hash(const char *key) {
@@ -57,7 +54,7 @@ void hash_map_set(HashMap *h, const char *key, void *value) {
     ABORT_IF_NULL(h);
 
     if (h->size >= h->cap) {
-        hash_map_resize_data(&h);
+        hash_map_resize_data(h);
     }
 
     int hash = compute_hash(key);
